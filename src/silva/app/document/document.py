@@ -5,14 +5,13 @@
 
 from Products.Silva.Version import CatalogedVersion
 from Products.Silva.VersionedContent import CatalogedVersionedContent
-from zExceptions import BadRequest
 
 from five import grok
-from infrae import rest
 from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.core import conf as silvaconf
+from silva.core.interfaces.adapters import IIndexEntries
 from silva.core.conf.interfaces import ITitledContent
-from silva.core.editor.interfaces import ICKEditorResources
+from silva.core.editor.interfaces import ICKEditorResources, ITextIndexEntries
 from silva.core.editor.transform import render
 from silva.core.editor.transform.interfaces import IInputEditorFilter, IDisplayFilter
 from silva.core.editor.text import Text
@@ -92,19 +91,17 @@ class DocumentEditPage(silvasmi.SMIPage):
                 'body', version, self.request, IInputEditorFilter)
 
 
-class RESTSaveDocument(rest.REST):
-    """Save document.
-    """
-    grok.context(IDocument)
-    grok.name('silva.app.document.save')
+#Indexes
+class DocumentIndexEntries(grok.Adapter):
+    grok.implements(IIndexEntries)
 
-    def POST(self, content):
-        version = self.context.get_editable()
+    def get_title(self):
+        return self.context.get_title()
+
+    def get_entries(self):
+        version = self.context.get_viewable()
         if version is None:
-            raise BadRequest('Document is not editable')
-        version.body = content
-
-
-
-
-
+            return []
+        return map(
+            lambda e: (e.anchor, e.title),
+            ITextIndexEntries(version.body).entries)
