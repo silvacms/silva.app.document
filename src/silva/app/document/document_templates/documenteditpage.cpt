@@ -1,4 +1,12 @@
-<div id="editor">
-  <textarea id="body" tal:content="structure view.document">
-  </textarea>
-</div>
+<tal:document>
+  <div id="editor"
+       tal:condition="view.edition">
+    <textarea id="body" tal:content="structure view.edition">
+    </textarea>
+  </div>
+  <!-- Preview is class public in SMI CSS -->
+  <div id="preview"
+       tal:condition="view.preview"
+       tal:content="structure view.preview">
+  </div>
+</tal:document>

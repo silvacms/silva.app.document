@@ -21,6 +21,7 @@ from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 from zope.interface import alsoProvides
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
 
 # Version class for the content
@@ -84,11 +85,16 @@ class DocumentEditPage(silvasmi.SMIPage):
 
     def update(self):
         alsoProvides(self.request, ICKEditorResources)
-        self.document = '<p></p>'
+        self.preview = None
+        self.edition = None
         version = self.context.get_editable()
         if version is not None:
-            self.document = render(
+            self.edition = render(
                 'body', version, self.request, IInputEditorFilter)
+        else:
+            version = self.context.get_viewable()
+            self.preview = render(
+                'body', version, self.request, IDisplayFilter)
 
 
 #Indexes
@@ -105,3 +111,11 @@ class DocumentIndexEntries(grok.Adapter):
         return map(
             lambda e: (e.anchor, e.title),
             ITextIndexEntries(version.body).entries)
+
+
+@grok.subscribe(IDocument, IObjectCreatedEvent)
+def set_title_of_new_document(content, event):
+    """If a document is added, it will contain by default its title.
+    """
+    version = content.get_editable()
+    version.body.save(u'<h1>' + version.get_title() + u'</h1>')
