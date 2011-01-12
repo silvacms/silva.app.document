@@ -13,6 +13,9 @@ from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.core import conf as silvaconf
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.editor.interfaces import ICKEditorResources
+from silva.core.editor.transform import render
+from silva.core.editor.transform.interfaces import IInputEditorFilter, IDisplayFilter
+from silva.core.editor.text import Text
 from silva.core.smi import interfaces
 from silva.core.smi import smi as silvasmi
 from silva.core.views import views as silvaviews
@@ -27,10 +30,13 @@ class DocumentVersion(CatalogedVersion):
     """
     meta_type = 'Silva new Document Version'
     grok.implements(IDocumentVersion)
-    body = u''
+
+    def __init__(self, *args):
+        super(DocumentVersion, self).__init__(*args)
+        self.body = Text(u'<p></p>')
 
     def fulltext(self):
-        return [self.get_title(), self.body]
+        return [self.get_title(), unicode(self.body)]
 
 
 # Content class
@@ -62,7 +68,8 @@ class DocumentPublicView(silvaviews.View):
 
     def render(self):
         if self.content:
-            return self.content.body
+            return unicode(render(
+                'body', self.content, self.request, IDisplayFilter))
         return _('This content is not available.')
 
 
@@ -78,11 +85,11 @@ class DocumentEditPage(silvasmi.SMIPage):
 
     def update(self):
         alsoProvides(self.request, ICKEditorResources)
-        self.document = None
+        self.document = '<p></p>'
         version = self.context.get_editable()
         if version is not None:
-            self.document = version.body
-        # If self.document is None
+            self.document = render(
+                'body', version, self.request, IInputEditorFilter)
 
 
 class RESTSaveDocument(rest.REST):

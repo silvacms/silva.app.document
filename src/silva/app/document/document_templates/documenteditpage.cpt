@@ -1,3 +1,4 @@
 <div id="editor">
-  <textarea tal:content="structure view.document" />
+  <textarea id="body" tal:content="structure view.document">
+  </textarea>
 </div>
