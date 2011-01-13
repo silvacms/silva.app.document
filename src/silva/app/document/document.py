@@ -9,17 +9,18 @@ from Products.Silva.VersionedContent import CatalogedVersionedContent
 from five import grok
 from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.core import conf as silvaconf
-from silva.core.interfaces.adapters import IIndexEntries
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.editor.interfaces import ICKEditorResources, ITextIndexEntries
-from silva.core.editor.transform import render
-from silva.core.editor.transform.interfaces import IInputEditorFilter, IDisplayFilter
 from silva.core.editor.text import Text
+from silva.core.editor.transform.interfaces import IInputEditorFilter, IDisplayFilter
+from silva.core.editor.transform.interfaces import ITransformer
+from silva.core.interfaces.adapters import IIndexEntries
 from silva.core.smi import interfaces
 from silva.core.smi import smi as silvasmi
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
+from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
@@ -68,8 +69,8 @@ class DocumentPublicView(silvaviews.View):
 
     def render(self):
         if self.content:
-            return unicode(render(
-                'body', self.content, self.request, IDisplayFilter))
+            transformer = getMultiAdapter((self.content, self.request), ITransformer)
+            return transformer.attribute('body', IDisplayFilter)
         return _('This content is not available.')
 
 
@@ -89,12 +90,13 @@ class DocumentEditPage(silvasmi.SMIPage):
         self.edition = None
         version = self.context.get_editable()
         if version is not None:
-            self.edition = render(
-                'body', version, self.request, IInputEditorFilter)
+            transformer = getMultiAdapter((version, self.request), ITransformer)
+            self.edition = transformer.attribute('body', IInputEditorFilter)
         else:
             version = self.context.get_viewable()
-            self.preview = render(
-                'body', version, self.request, IDisplayFilter)
+            if version:
+                transformer = getMultiAdapter((version, self.request), ITransformer)
+                self.preview = transformer.attribute('body', IDisplayFilter)
 
 
 #Indexes

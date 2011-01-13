@@ -4,18 +4,18 @@
 # $Id$
 
 from five import grok
-from silva.core.editor.transform.interfaces import IOutputEditorFilter
-from silva.core.editor.transform.base import Transformer
+from silva.core.editor.transform.interfaces import ISaveEditorFilter
+from silva.core.editor.transform.base import TransformationFilter
 from silva.app.document.interfaces import IDocumentVersion
 from zope.publisher.interfaces.browser import IBrowserRequest
 
 
-class TitleUpdater(Transformer):
+class TitleUpdater(TransformationFilter):
     """On saving from the editor, look for the first h1 or h2 to set as
     document title.
     """
-    grok.implements(IOutputEditorFilter)
-    grok.provides(IOutputEditorFilter)
+    grok.implements(ISaveEditorFilter)
+    grok.provides(ISaveEditorFilter)
     grok.order(100)
     grok.adapts(IDocumentVersion, IBrowserRequest)
 
