@@ -10,7 +10,7 @@ from five import grok
 from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.core import conf as silvaconf
 from silva.core.conf.interfaces import ITitledContent
-from silva.core.editor.interfaces import ICKEditorResources, ITextIndexEntries
+from silva.core.editor.interfaces import ICKEditorViewResources, ITextIndexEntries
 from silva.core.editor.text import Text
 from silva.core.editor.transform.interfaces import IInputEditorFilter, IDisplayFilter
 from silva.core.editor.transform.interfaces import ITransformer
@@ -85,7 +85,7 @@ class DocumentEditPage(silvasmi.SMIPage):
     tab = 'edit'
 
     def update(self):
-        alsoProvides(self.request, ICKEditorResources)
+        alsoProvides(self.request, ICKEditorViewResources)
         self.preview = None
         self.edition = None
         version = self.context.get_editable()
