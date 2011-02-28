@@ -13,7 +13,6 @@ from silva.core.conf.interfaces import ITitledContent
 from silva.core.editor.interfaces import ICKEditorViewResources, ITextIndexEntries
 from silva.core.editor.text import Text
 from silva.core.editor.transform.interfaces import IInputEditorFilter, IDisplayFilter
-from silva.core.editor.transform.interfaces import ITransformer
 from silva.core.interfaces.adapters import IIndexEntries
 from silva.core.smi import interfaces
 from silva.core.smi import smi as silvasmi
@@ -34,7 +33,7 @@ class DocumentVersion(CatalogedVersion):
 
     def __init__(self, *args):
         super(DocumentVersion, self).__init__(*args)
-        self.body = Text(u'<p></p>')
+        self.body = Text("body", u'<p></p>')
 
     def fulltext(self):
         return [self.get_title(), unicode(self.body)]
@@ -48,6 +47,7 @@ class Document(CatalogedVersionedContent):
 
     grok.implements(IDocument)
     silvaconf.version_class(DocumentVersion)
+    silvaconf.priority(-6)
     silvaconf.icon('document.png')
 
 
@@ -68,35 +68,9 @@ class DocumentPublicView(silvaviews.View):
     silvaconf.context(IDocument)
 
     def render(self):
-        if self.content:
-            transformer = getMultiAdapter((self.content, self.request), ITransformer)
-            return transformer.attribute('body', IDisplayFilter)
+        if self.content is not None:
+            return self.content.body.render(self.content, self.request, IDisplayFilter)
         return _('This content is not available.')
-
-
-class DocumentEditPage(silvasmi.SMIPage):
-    """CKEditor edit page for silva document.
-    """
-    grok.context(IDocument)
-    grok.implements(interfaces.IEditTab,
-                    interfaces.ISMITabIndex,
-                    interfaces.ISMINavigationOff)
-    grok.name('tab_edit')
-    tab = 'edit'
-
-    def update(self):
-        alsoProvides(self.request, ICKEditorViewResources)
-        self.preview = None
-        self.edition = None
-        version = self.context.get_editable()
-        if version is not None:
-            transformer = getMultiAdapter((version, self.request), ITransformer)
-            self.edition = transformer.attribute('body', IInputEditorFilter)
-        else:
-            version = self.context.get_viewable()
-            if version:
-                transformer = getMultiAdapter((version, self.request), ITransformer)
-                self.preview = transformer.attribute('body', IDisplayFilter)
 
 
 #Indexes
@@ -120,4 +94,4 @@ def set_title_of_new_document(content, event):
     """If a document is added, it will contain by default its title.
     """
     version = content.get_editable()
-    version.body.save(u'<h1>' + version.get_title() + u'</h1>')
+    version.body.save_raw_text(u'<h1>' + version.get_title() + u'</h1>')
