@@ -10,17 +10,13 @@ from five import grok
 from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.core import conf as silvaconf
 from silva.core.conf.interfaces import ITitledContent
-from silva.core.editor.interfaces import ICKEditorViewResources, ITextIndexEntries
+from silva.core.editor.interfaces import ITextIndexEntries
 from silva.core.editor.text import Text
-from silva.core.editor.transform.interfaces import IInputEditorFilter, IDisplayFilter
+from silva.core.editor.transform.interfaces import IDisplayFilter
 from silva.core.interfaces.adapters import IIndexEntries
-from silva.core.smi import interfaces
-from silva.core.smi import smi as silvasmi
 from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
-from zope.component import getMultiAdapter
-from zope.interface import alsoProvides
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 
 
