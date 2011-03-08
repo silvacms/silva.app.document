@@ -18,6 +18,7 @@ from silva.core.views import views as silvaviews
 from silva.translations import translate as _
 from zeam.form import silva as silvaforms
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 
 
 # Version class for the content
@@ -89,5 +90,8 @@ class DocumentIndexEntries(grok.Adapter):
 def set_title_of_new_document(content, event):
     """If a document is added, it will contain by default its title.
     """
+    if IObjectCopiedEvent.providedBy(event):
+        # Don't override a copied document !
+        return
     version = content.get_editable()
     version.body.save_raw_text(u'<h1>' + version.get_title() + u'</h1>')
