@@ -23,9 +23,15 @@ setup(name='silva.app.document',
       include_package_data=True,
       zip_safe=True,
       install_requires=[
-          'setuptools',
+        'five.grok',
+        'setuptools',
+        'silva.core.conf',
+        'silva.core.editor',
+        'silva.core.interfaces',
+        'silva.core.views',
+        'silva.translations',
+        'silva.ui',
+        'zope.component',
+        'zope.interface',
       ],
-      entry_points="""
-      # -*- Entry points: -*-
-      """,
       )

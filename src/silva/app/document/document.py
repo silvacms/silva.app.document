@@ -7,18 +7,23 @@ from Products.Silva.Version import CatalogedVersion
 from Products.Silva.VersionedContent import CatalogedVersionedContent
 
 from five import grok
+from zope.component import getMultiAdapter
+from zope.lifecycleevent.interfaces import IObjectCopiedEvent
+from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+
 from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.core import conf as silvaconf
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.editor.interfaces import ITextIndexEntries
 from silva.core.editor.text import Text
 from silva.core.editor.transform.interfaces import IDisplayFilter
+from silva.core.editor.transform.interfaces import IInputEditorFilter
 from silva.core.interfaces.adapters import IIndexEntries
 from silva.core.views import views as silvaviews
+from silva.core.views.interfaces import ISilvaURL
 from silva.translations import translate as _
+from silva.ui.rest.base import Screen, PageREST
 from zeam.form import silva as silvaforms
-from zope.lifecycleevent.interfaces import IObjectCreatedEvent
-from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 
 
 # Version class for the content
@@ -56,6 +61,26 @@ class DocumentAddForm(silvaforms.SMIAddForm):
     silvaconf.name('Silva new Document')
 
     fields = silvaforms.Fields(ITitledContent)
+
+
+# Edit view
+class DocumentEdit(PageREST):
+    grok.adapts(Screen, IDocument)
+    grok.name('content')
+    grok.require('silva.ChangeSilvaContent')
+
+    def payload(self):
+        version = self.context.get_editable()
+        if version is not None:
+            text = version.body.render(version, self.request, IInputEditorFilter)
+
+            return {"ifaces": ["editor"],
+                    "name": "body",
+                    "text": text}
+
+        url = getMultiAdapter((self.context, self.request), ISilvaURL).preview()
+        return {"ifaces": ["preview"],
+                "html_url": url}
 
 
 # Public view
