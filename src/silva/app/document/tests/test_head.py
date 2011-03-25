@@ -9,6 +9,7 @@ from silva.core.views.tests.test_head import HEADTestCase, PUBLIC_HEADERS_EXPECT
 
 
 class DocumentHEADTestCase(HEADTestCase):
+    # XXX use infrae.testbrowser
 
     def test_document(self):
         factory = self.root.manage_addProduct['silva.app.document']
@@ -22,8 +23,6 @@ class DocumentHEADTestCase(HEADTestCase):
         factory.manage_addDocument('document', 'Document')
         self.check_headers(
             '/root/document', AUTH, PUBLIC_HEADERS_EXPECTED)
-        self.assertEquals(
-            "", self.response.getBody(), "response should be empty")
         self.assertEmptyResponse()
 
     def test_document_auth_private(self):
