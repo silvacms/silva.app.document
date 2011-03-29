@@ -3,8 +3,8 @@
 # See also LICENSE.txt
 # $Id$
 
-from Products.Silva.Version import CatalogedVersion
-from Products.Silva.VersionedContent import CatalogedVersionedContent
+from Products.Silva.Version import Version
+from Products.Silva.VersionedContent import VersionedContent
 
 from five import grok
 from zope.component import getMultiAdapter
@@ -27,7 +27,7 @@ from zeam.form import silva as silvaforms
 
 
 # Version class for the content
-class DocumentVersion(CatalogedVersion):
+class DocumentVersion(Version):
     """Version of a document object.
     """
     meta_type = 'Silva new Document Version'
@@ -42,7 +42,7 @@ class DocumentVersion(CatalogedVersion):
 
 
 # Content class
-class Document(CatalogedVersionedContent):
+class Document(VersionedContent):
     """A new style Document.
     """
     meta_type = 'Silva new Document'
