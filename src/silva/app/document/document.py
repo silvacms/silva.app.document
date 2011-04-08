@@ -3,13 +3,16 @@
 # See also LICENSE.txt
 # $Id$
 
+import lxml.html
+
 from Products.Silva.Version import Version
 from Products.Silva.VersionedContent import VersionedContent
 
 from five import grok
-from zope.component import getMultiAdapter
+from zope.component import getMultiAdapter, getUtility
 from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope.traversing.browser import absoluteURL
 
 from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.core import conf as silvaconf
@@ -19,11 +22,14 @@ from silva.core.editor.text import Text
 from silva.core.editor.transform.interfaces import IDisplayFilter
 from silva.core.editor.transform.interfaces import IInputEditorFilter
 from silva.core.interfaces.adapters import IIndexEntries
+from silva.core.references.interfaces import IReferenceService
+from silva.core.references.reference import get_content_from_id
 from silva.core.views import views as silvaviews
 from silva.core.views.interfaces import ISilvaURL
 from silva.translations import translate as _
 from silva.ui.rest.base import Screen, PageREST
 from zeam.form import silva as silvaforms
+
 
 
 # Version class for the content
@@ -93,6 +99,39 @@ class DocumentPublicView(silvaviews.View):
         if self.content is not None:
             return self.content.body.render(self.content, self.request, IDisplayFilter)
         return _('This content is not available.')
+
+
+class ThumbnailView(silvaviews.View):
+    """ Thumbnail
+    """
+    silvaconf.context(IDocument)
+    silvaconf.name('thumbnail')
+    image = None
+
+    format = u"""<img src="%s?thumbnail" class="silva-thumbnail" />"""
+
+    # XXX this code may be moved to some adapter, so it can be used
+    # to get the thumbnail object without a request
+    def get_thumbnail_image(self):
+        tree = lxml.html.fromstring(unicode(self.content.body))
+        results = tree.xpath("//img[@reference][1]")
+        if results:
+            image = results[0]
+            ref_name = image.attrib['reference']
+            reference_service = getUtility(IReferenceService)
+            reference = reference_service.get_reference(
+                self.content, name=ref_name)
+            return get_content_from_id(reference.target_id)
+        return None
+
+    def update(self):
+        if self.content:
+            self.image = self.get_thumbnail_image()
+
+    def render(self):
+        if self.image is not None:
+            return self.format % absoluteURL(self.image, self.request)
+        return u""
 
 
 #Indexes
