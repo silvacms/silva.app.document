@@ -10,6 +10,9 @@
   <include package="silva.core.editor" />
   <include package="silva.ui" />
 
+  <include package="Products.SilvaExternalSources" />
+
+  <!-- Grok the package -->
   <grok:grok package="." />
 
 </configure>
