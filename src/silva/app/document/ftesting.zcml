@@ -3,6 +3,7 @@
     xmlns:grok="http://namespaces.zope.org/grok">
 
   <include package="Products.Silva" file="ftesting.zcml" />
+  <include package="Products.SilvaExternalSources" />
   <include package="silva.app.document" />
 
 </configure>

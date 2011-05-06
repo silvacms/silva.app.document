@@ -10,7 +10,7 @@ import transaction
 
 class SilvaDocumentLayer(SilvaLayer):
     default_packages = SilvaLayer.default_packages + [
-        'silva.app.document',
+        'silva.app.document'
         ]
 
     def _install_application(self, app):

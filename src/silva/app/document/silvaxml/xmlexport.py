@@ -3,9 +3,8 @@ from zope.interface import Interface
 from silva.app.document import interfaces
 from Products.Silva.silvaxml import xmlexport
 from silva.core.editor.transform.silvaxml.export import TextProducerProxy
+from silva.app.document.silvaxml import NS_URI
 
-
-NS_URI = 'http://infrae.com/namespace/silva.app.document'
 xmlexport.theXMLExporter.registerNamespace('silvaappdoc', NS_URI)
 
 
@@ -16,7 +15,7 @@ class DocumentProducer(xmlexport.VersionedContentProducer):
         self.startElementNS(NS_URI, 'document', {'id': self.context.id})
         self.workflow()
         self.versions()
-        self.endElement('appdocument')
+        self.endElementNS(NS_URI, 'document')
 
 
 class DocumentVersionProducer(xmlexport.SilvaBaseProducer):
