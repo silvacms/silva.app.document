@@ -2,7 +2,7 @@ from five import grok
 from zope.interface import Interface
 from silva.app.document import interfaces
 from Products.Silva.silvaxml import xmlexport
-from silva.core.editor.transform.silvaxml.export import TextProducerProxy
+from silva.core.editor.transform.silvaxml.xmlexport import TextProducerProxy
 from silva.app.document.silvaxml import NS_URI
 
 xmlexport.theXMLExporter.registerNamespace('silvaappdoc', NS_URI)

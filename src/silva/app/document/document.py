@@ -158,4 +158,7 @@ def set_title_of_new_document(content, event):
         # Don't override a copied document !
         return
     version = content.get_editable()
-    version.body.save_raw_text(u'<h1>' + version.get_title() + u'</h1>')
+    if version is not None:
+        version.body.save_raw_text(u'<h1>' + version.get_title() + u'</h1>')
+
+
