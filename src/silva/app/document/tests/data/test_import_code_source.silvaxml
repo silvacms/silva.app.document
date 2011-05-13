@@ -1,0 +1,49 @@
+<silva xmlns="http://infrae.com/namespace/silva"
+    xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content"
+    xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra"
+    xmlns:silvaappdoc="http://infrae.com/namespace/silva.app.document"
+    xmlns:silvacoreeditor="http://infrae.com/namespace/silva.core.editor"
+    silva_version="Silva 3.0a1dev">
+    <silvaappdoc:document id="example">
+        <workflow>
+          <version id="0">
+            <status>unapproved</status>
+            <publication_datetime/>
+            <expiration_datetime/>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>Example</silva-content:maintitle>
+              <silva-content:shorttitle/>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:comment/>
+              <silva-extra:contactemail/>
+              <silva-extra:contactname/>
+              <silva-extra:content_description/>
+              <silva-extra:creationtime>2011-05-12T10:12:49Z</silva-extra:creationtime>
+              <silva-extra:creator>manager</silva-extra:creator>
+              <silva-extra:expirationtime/>
+              <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
+              <silva-extra:keywords/>
+              <silva-extra:language/>
+              <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
+              <silva-extra:modificationtime>2011-05-12T10:12:49Z</silva-extra:modificationtime>
+              <silva-extra:publicationtime/>
+              <silva-extra:subject/>
+            </set>
+          </metadata>
+          <silvaappdoc:body>
+            <text xmlns="http://infrae.com/namespace/silva.core.editor">
+              <div>
+    <p>some paragraph..</p>
+    <div class="external-source default" source-path="cs_citation">
+    <fields xmlns="http://infrae.com/namespace/Products.SilvaExternalSources"><field id="field-citation">blahblahblah</field><field id="field-author">ouam</field><field id="field-source">wikipedia</field></fields></div>
+</div>
+            </text>
+          </silvaappdoc:body>
+        </content>
+      </silvaappdoc:document>
+</silva>

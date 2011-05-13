@@ -1,0 +1,173 @@
+<silva xmlns="http://infrae.com/namespace/silva" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" xmlns:silvaappdoc="http://infrae.com/namespace/silva.app.document" xmlns:silvacoreeditor="http://infrae.com/namespace/silva.core.editor" silva_version="Silva 3.0a1dev">
+  <publication id="root">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>root</silva-content:maintitle>
+        <silva-content:shorttitle/>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:comment/>
+        <silva-extra:contactemail/>
+        <silva-extra:contactname/>
+        <silva-extra:content_description/>
+        <silva-extra:creationtime/>
+        <silva-extra:creator>manager</silva-extra:creator>
+        <silva-extra:expirationtime/>
+        <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
+        <silva-extra:keywords/>
+        <silva-extra:language/>
+        <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
+        <silva-extra:modificationtime>2011-05-12T11:18:03Z</silva-extra:modificationtime>
+        <silva-extra:publicationtime/>
+        <silva-extra:subject/>
+      </set>
+      <set xmlns:silvalayout="http://infrae.com/namespace/metadata/silva-layout" id="silva-layout">
+        <silvalayout:skin>Standard Issue</silvalayout:skin>
+      </set>
+    </metadata>
+    <content>
+      <default>
+        <silvaappdoc:document id="index">
+          <workflow>
+            <version id="0">
+              <status>public</status>
+              <publication_datetime>2011-05-12T11:18:03Z</publication_datetime>
+              <expiration_datetime/>
+            </version>
+          </workflow>
+          <content version_id="0">
+            <metadata>
+              <set id="silva-content">
+                <silva-content:maintitle>Welcome to Silva!</silva-content:maintitle>
+                <silva-content:shorttitle/>
+              </set>
+              <set id="silva-extra">
+                <silva-extra:comment/>
+                <silva-extra:contactemail/>
+                <silva-extra:contactname/>
+                <silva-extra:content_description/>
+                <silva-extra:creationtime>2011-05-12T11:18:03Z</silva-extra:creationtime>
+                <silva-extra:creator>manager</silva-extra:creator>
+                <silva-extra:expirationtime/>
+                <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
+                <silva-extra:keywords/>
+                <silva-extra:language/>
+                <silva-extra:lastauthor>manager</silva-extra:lastauthor>
+                <silva-extra:modificationtime>2011-05-12T11:18:03Z</silva-extra:modificationtime>
+                <silva-extra:publicationtime/>
+                <silva-extra:subject/>
+              </set>
+            </metadata>
+            <silvaappdoc:body>
+              <text xmlns="http://infrae.com/namespace/silva.core.editor">
+                <div>
+                  <h1>Welcome to Silva!</h1>
+                  <p>Welcome to Silva! This is the public view. To actually see something interesting, try adding '/edit' to your url (if you're not already editing, you can <a href="edit">click this link</a>).</p>
+                </div>
+              </text>
+            </silvaappdoc:body>
+          </content>
+        </silvaappdoc:document>
+      </default>
+      <silvaappdoc:document id="example">
+        <workflow>
+          <version id="0">
+            <status>unapproved</status>
+            <publication_datetime/>
+            <expiration_datetime/>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>Example</silva-content:maintitle>
+              <silva-content:shorttitle/>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:comment/>
+              <silva-extra:contactemail/>
+              <silva-extra:contactname/>
+              <silva-extra:content_description/>
+              <silva-extra:creationtime>2011-05-12T11:18:03Z</silva-extra:creationtime>
+              <silva-extra:creator>manager</silva-extra:creator>
+              <silva-extra:expirationtime/>
+              <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
+              <silva-extra:keywords/>
+              <silva-extra:language/>
+              <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
+              <silva-extra:modificationtime>2011-05-12T11:18:03Z</silva-extra:modificationtime>
+              <silva-extra:publicationtime/>
+              <silva-extra:subject/>
+            </set>
+          </metadata>
+          <silvaappdoc:body>
+            <text xmlns="http://infrae.com/namespace/silva.core.editor">
+              <div>
+  <h1>Example</h1>
+  <p>
+    here is a paragraph...</p>
+  <p>
+    then comes a <a class="link" reference="root/folder/other" reference-name="93094ba8-70bd-11e0-b805-c42c0338b1a2" target="_self">link</a></p>
+  <p>then comes an image :</p>
+  <div class="image default">
+    <img alt="location.png" reference="root/folder/img" reference-name="a5c84b4a-70bd-11e0-8c0a-c42c0338b1a2"/><span class="image-caption">location.png</span>
+  </div>
+</div>
+            </text>
+          </silvaappdoc:body>
+        </content>
+      </silvaappdoc:document>
+      <folder id="folder">
+        <metadata>
+          <set id="silva-content">
+            <silva-content:maintitle>Folder</silva-content:maintitle>
+            <silva-content:shorttitle/>
+          </set>
+          <set id="silva-extra">
+            <silva-extra:comment/>
+            <silva-extra:contactemail/>
+            <silva-extra:contactname/>
+            <silva-extra:content_description/>
+            <silva-extra:creationtime>2011-05-12T11:18:03Z</silva-extra:creationtime>
+            <silva-extra:creator>manager</silva-extra:creator>
+            <silva-extra:expirationtime/>
+            <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
+            <silva-extra:keywords/>
+            <silva-extra:language/>
+            <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
+            <silva-extra:modificationtime>2011-05-12T11:18:03Z</silva-extra:modificationtime>
+            <silva-extra:publicationtime/>
+            <silva-extra:subject/>
+          </set>
+        </metadata>
+        <content>
+          <image_asset id="img" web_crop="" web_format="PNG" web_scale="100%">
+            <metadata>
+              <set id="silva-content">
+                <silva-content:maintitle>Image</silva-content:maintitle>
+                <silva-content:shorttitle/>
+              </set>
+              <set id="silva-extra">
+                <silva-extra:comment/>
+                <silva-extra:contactemail/>
+                <silva-extra:contactname/>
+                <silva-extra:content_description/>
+                <silva-extra:creationtime>2011-05-12T11:18:03Z</silva-extra:creationtime>
+                <silva-extra:creator>manager</silva-extra:creator>
+                <silva-extra:expirationtime/>
+                <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
+                <silva-extra:keywords/>
+                <silva-extra:language/>
+                <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
+                <silva-extra:modificationtime>2011-05-12T11:18:03Z</silva-extra:modificationtime>
+                <silva-extra:publicationtime/>
+                <silva-extra:subject/>
+              </set>
+            </metadata>
+            <asset_id>1</asset_id>
+          </image_asset>
+        </content>
+      </folder>
+    </content>
+  </publication>
+</silva>

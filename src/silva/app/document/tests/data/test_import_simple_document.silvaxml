@@ -1,0 +1,48 @@
+<silva xmlns="http://infrae.com/namespace/silva"
+    xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content"
+    xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra"
+    xmlns:silvaappdoc="http://infrae.com/namespace/silva.app.document"
+    xmlns:silvacoreeditor="http://infrae.com/namespace/silva.core.editor"
+    silva_version="Silva 3.0a1dev">
+  <silvaappdoc:document id="adoc">
+    <workflow>
+      <version id="0">
+        <status>public</status>
+        <publication_datetime>2011-05-06T15:19:09Z</publication_datetime>
+        <expiration_datetime/>
+      </version>
+    </workflow>
+    <content version_id="0">
+      <metadata>
+        <set id="silva-content">
+          <silva-content:maintitle>Welcome to Silva!</silva-content:maintitle>
+          <silva-content:shorttitle/>
+        </set>
+        <set id="silva-extra">
+          <silva-extra:comment/>
+          <silva-extra:contactemail/>
+          <silva-extra:contactname/>
+          <silva-extra:content_description/>
+          <silva-extra:creationtime>2011-05-06T15:19:09Z</silva-extra:creationtime>
+          <silva-extra:creator>manager</silva-extra:creator>
+          <silva-extra:expirationtime/>
+          <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
+          <silva-extra:keywords/>
+          <silva-extra:language/>
+          <silva-extra:lastauthor>manager</silva-extra:lastauthor>
+          <silva-extra:modificationtime>2011-05-06T15:19:09Z</silva-extra:modificationtime>
+          <silva-extra:publicationtime/>
+          <silva-extra:subject/>
+        </set>
+      </metadata>
+      <silvaappdoc:body>
+        <text xmlns="http://infrae.com/namespace/silva.core.editor">
+          <div>
+            <h1>Welcome to Silva!</h1>
+            <p>Welcome to Silva! This is the public view. To actually see something interesting, try adding '/edit' to your url (if you're not already editing, you can <a href="edit">click this link</a>).</p>
+          </div>
+        </text>
+      </silvaappdoc:body>
+    </content>
+  </silvaappdoc:document>
+</silva>

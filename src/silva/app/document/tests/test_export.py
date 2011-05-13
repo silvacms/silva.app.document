@@ -66,12 +66,10 @@ class TestExportReferences(unittest.TestCase):
             add=True)
         reference.set_target_id(get_content_id(self.image))
 
-    def test_export_from_root(self):
+    def test_export_references_from_root(self):
         xml_string, _ = exportToString(self.root)
         tree = lxml.etree.fromstring(xml_string)
-        # from infrae.testing.xmlindent import XMLSoup
-        # print XMLSoup(xml_string.strip()).prettify()
-
+        # print lxml.etree.tostring(tree, pretty_print=True)
         nodes = tree.xpath('//sad:document[@id="example"]',
                             namespaces={'sad': DOC_NS})
         self.assertEquals(1, len(nodes))
@@ -80,12 +78,12 @@ class TestExportReferences(unittest.TestCase):
         nodes = doc.xpath("//ed:a[@reference]", namespaces={'ed': EDITOR_NS})
         self.assertEqual(1, len(nodes))
         node = nodes[0]
-        self.assertEquals('folder/other', node.attrib['reference'])
+        self.assertEquals('root/folder/other', node.attrib['reference'])
 
         nodes = doc.xpath("//ed:img[@reference]", namespaces={'ed': EDITOR_NS})
         self.assertEqual(1, len(nodes))
         node = nodes[0]
-        self.assertEquals('folder/img', node.attrib['reference'])
+        self.assertEquals('root/folder/img', node.attrib['reference'])
 
 
 class TestExportCodeSources(unittest.TestCase):
@@ -115,10 +113,10 @@ class TestExportCodeSources(unittest.TestCase):
             self.html,
             ISaveEditorFilter))
 
-    def test_export(self):
+    def test_export_code_sources(self):
         xml_string, _ = exportToString(self.root)
         tree = lxml.etree.fromstring(xml_string)
-        print lxml.etree.tostring(tree, pretty_print=True)
+        # print lxml.etree.tostring(tree, pretty_print=True)
         ns = {'e': "http://infrae.com/namespace/silva.core.editor",
             'cs': "http://infrae.com/namespace/Products.SilvaExternalSources"}
         sel = '//e:div[contains(@class, "external-source")]'
