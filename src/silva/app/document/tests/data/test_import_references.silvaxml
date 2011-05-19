@@ -17,7 +17,7 @@
         <silva-extra:keywords/>
         <silva-extra:language/>
         <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
-        <silva-extra:modificationtime>2011-05-12T11:18:03Z</silva-extra:modificationtime>
+        <silva-extra:modificationtime>2011-05-19T13:33:40Z</silva-extra:modificationtime>
         <silva-extra:publicationtime/>
         <silva-extra:subject/>
       </set>
@@ -31,7 +31,7 @@
           <workflow>
             <version id="0">
               <status>public</status>
-              <publication_datetime>2011-05-12T11:18:03Z</publication_datetime>
+              <publication_datetime>2011-05-19T13:33:40Z</publication_datetime>
               <expiration_datetime/>
             </version>
           </workflow>
@@ -46,24 +46,24 @@
                 <silva-extra:contactemail/>
                 <silva-extra:contactname/>
                 <silva-extra:content_description/>
-                <silva-extra:creationtime>2011-05-12T11:18:03Z</silva-extra:creationtime>
+                <silva-extra:creationtime>2011-05-19T13:33:40Z</silva-extra:creationtime>
                 <silva-extra:creator>manager</silva-extra:creator>
                 <silva-extra:expirationtime/>
                 <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
                 <silva-extra:keywords/>
                 <silva-extra:language/>
                 <silva-extra:lastauthor>manager</silva-extra:lastauthor>
-                <silva-extra:modificationtime>2011-05-12T11:18:03Z</silva-extra:modificationtime>
+                <silva-extra:modificationtime>2011-05-19T13:33:40Z</silva-extra:modificationtime>
                 <silva-extra:publicationtime/>
                 <silva-extra:subject/>
               </set>
             </metadata>
             <silvaappdoc:body>
-              <text xmlns="http://infrae.com/namespace/silva.core.editor">
-                <div>
-                  <h1>Welcome to Silva!</h1>
-                  <p>Welcome to Silva! This is the public view. To actually see something interesting, try adding '/edit' to your url (if you're not already editing, you can <a href="edit">click this link</a>).</p>
-                </div>
+              <text xmlns:ns00="http://www.w3.org/1999/xhtml" xmlns="http://infrae.com/namespace/silva.core.editor">
+                <ns00:div>
+                  <ns00:h1>Welcome to Silva!</ns00:h1>
+                  <ns00:p>Welcome to Silva! This is the public view. To actually see something interesting, try adding '/edit' to your url (if you're not already editing, you can <ns00:a href="edit">click this link</ns00:a>).</ns00:p>
+                </ns00:div>
               </text>
             </silvaappdoc:body>
           </content>
@@ -88,31 +88,31 @@
               <silva-extra:contactemail/>
               <silva-extra:contactname/>
               <silva-extra:content_description/>
-              <silva-extra:creationtime>2011-05-12T11:18:03Z</silva-extra:creationtime>
+              <silva-extra:creationtime>2011-05-19T13:33:40Z</silva-extra:creationtime>
               <silva-extra:creator>manager</silva-extra:creator>
               <silva-extra:expirationtime/>
               <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
               <silva-extra:keywords/>
               <silva-extra:language/>
               <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
-              <silva-extra:modificationtime>2011-05-12T11:18:03Z</silva-extra:modificationtime>
+              <silva-extra:modificationtime>2011-05-19T13:33:40Z</silva-extra:modificationtime>
               <silva-extra:publicationtime/>
               <silva-extra:subject/>
             </set>
           </metadata>
           <silvaappdoc:body>
-            <text xmlns="http://infrae.com/namespace/silva.core.editor">
-              <div>
-  <h1>Example</h1>
-  <p>
-    here is a paragraph...</p>
-  <p>
-    then comes a <a class="link" reference="root/folder/other" reference-name="93094ba8-70bd-11e0-b805-c42c0338b1a2" target="_self">link</a></p>
-  <p>then comes an image :</p>
-  <div class="image default">
-    <img alt="location.png" reference="root/folder/img" reference-name="a5c84b4a-70bd-11e0-8c0a-c42c0338b1a2"/><span class="image-caption">location.png</span>
-  </div>
-</div>
+            <text xmlns:ns00="http://www.w3.org/1999/xhtml" xmlns="http://infrae.com/namespace/silva.core.editor">
+              <ns00:div>
+  <ns00:h1>Example</ns00:h1>
+  <ns00:p>
+    here is a paragraph...</ns00:p>
+  <ns00:p>
+    then comes a <ns00:a class="link" reference="root/folder/other" reference-name="93094ba8-70bd-11e0-b805-c42c0338b1a2" target="_self">link</ns00:a></ns00:p>
+  <ns00:p>then comes an image :</ns00:p>
+  <ns00:div class="image default">
+    <ns00:img alt="location.png" reference="root/folder/img" reference-name="a5c84b4a-70bd-11e0-8c0a-c42c0338b1a2"/><ns00:span class="image-caption">location.png</ns00:span>
+  </ns00:div>
+</ns00:div>
             </text>
           </silvaappdoc:body>
         </content>
@@ -128,14 +128,14 @@
             <silva-extra:contactemail/>
             <silva-extra:contactname/>
             <silva-extra:content_description/>
-            <silva-extra:creationtime>2011-05-12T11:18:03Z</silva-extra:creationtime>
+            <silva-extra:creationtime>2011-05-19T13:33:40Z</silva-extra:creationtime>
             <silva-extra:creator>manager</silva-extra:creator>
             <silva-extra:expirationtime/>
             <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
             <silva-extra:keywords/>
             <silva-extra:language/>
             <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
-            <silva-extra:modificationtime>2011-05-12T11:18:03Z</silva-extra:modificationtime>
+            <silva-extra:modificationtime>2011-05-19T13:33:40Z</silva-extra:modificationtime>
             <silva-extra:publicationtime/>
             <silva-extra:subject/>
           </set>
@@ -152,14 +152,14 @@
                 <silva-extra:contactemail/>
                 <silva-extra:contactname/>
                 <silva-extra:content_description/>
-                <silva-extra:creationtime>2011-05-12T11:18:03Z</silva-extra:creationtime>
+                <silva-extra:creationtime>2011-05-19T13:33:40Z</silva-extra:creationtime>
                 <silva-extra:creator>manager</silva-extra:creator>
                 <silva-extra:expirationtime/>
                 <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
                 <silva-extra:keywords/>
                 <silva-extra:language/>
                 <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
-                <silva-extra:modificationtime>2011-05-12T11:18:03Z</silva-extra:modificationtime>
+                <silva-extra:modificationtime>2011-05-19T13:33:40Z</silva-extra:modificationtime>
                 <silva-extra:publicationtime/>
                 <silva-extra:subject/>
               </set>

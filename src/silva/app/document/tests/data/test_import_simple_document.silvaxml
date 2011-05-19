@@ -36,11 +36,11 @@
         </set>
       </metadata>
       <silvaappdoc:body>
-        <text xmlns="http://infrae.com/namespace/silva.core.editor">
-          <div>
-            <h1>Welcome to Silva!</h1>
-            <p>Welcome to Silva! This is the public view. To actually see something interesting, try adding '/edit' to your url (if you're not already editing, you can <a href="edit">click this link</a>).</p>
-          </div>
+        <text xmlns:ns00="http://www.w3.org/1999/xhtml" xmlns="http://infrae.com/namespace/silva.core.editor">
+          <ns00:div>
+            <ns00:h1>Welcome to Silva!</ns00:h1>
+            <ns00:p>Welcome to Silva! This is the public view. To actually see something interesting, try adding '/edit' to your url (if you're not already editing, you can <ns00:a href="edit">click this link</ns00:a>).</ns00:p>
+          </ns00:div>
         </text>
       </silvaappdoc:body>
     </content>

@@ -36,12 +36,12 @@
             </set>
           </metadata>
           <silvaappdoc:body>
-            <text xmlns="http://infrae.com/namespace/silva.core.editor">
-              <div>
-    <p>some paragraph..</p>
-    <div class="external-source default" source-path="cs_citation">
-    <fields xmlns="http://infrae.com/namespace/Products.SilvaExternalSources"><field id="field-citation">blahblahblah</field><field id="field-author">ouam</field><field id="field-source">wikipedia</field></fields></div>
-</div>
+            <text xmlns:ns00="http://www.w3.org/1999/xhtml" xmlns="http://infrae.com/namespace/silva.core.editor">
+              <ns00:div>
+                <ns00:p>some paragraph..</ns00:p>
+                <ns00:div class="external-source default" source-path="cs_citation">
+                <ns01:fields xmlns:ns01="http://infrae.com/namespace/Products.SilvaExternalSources"><ns01:field id="field-citation">blahblahblah</ns01:field><ns01:field id="field-author">ouam</ns01:field><ns01:field id="field-source">wikipedia</ns01:field></ns01:fields></ns00:div>
+              </ns00:div>
             </text>
           </silvaappdoc:body>
         </content>
