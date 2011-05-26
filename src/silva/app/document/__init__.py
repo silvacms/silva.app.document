@@ -15,7 +15,7 @@ from zope.interface import Interface
 
 
 silvaconf.extension_name("silva.app.document")
-silvaconf.extension_title("Silva new Document")
+silvaconf.extension_title("Silva Document")
 silvaconf.extension_depends(["Silva", "silva.core.editor"])
 silvaconf.extension_default()
 
@@ -40,8 +40,7 @@ class DocumentInstaller(DefaultInstaller):
     def install_custom(self, root):
         if queryUtility(ICKEditorService) is None:
             root.manage_addProduct['silva.core.editor'].manage_addCKEditorService()
-        root.service_containerpolicy.register(
-            'Silva new Document', DocumentPolicy, -1)
+        root.service_containerpolicy.register('Silva Document', DocumentPolicy, -1)
 
 
 @grok.subscribe(DocumentInstaller, IInstalledExtensionEvent)

@@ -36,7 +36,7 @@ from zeam.form import silva as silvaforms
 class DocumentVersion(Version):
     """Version of a document object.
     """
-    meta_type = 'Silva new Document Version'
+    meta_type = 'Silva Document Version'
     grok.implements(IDocumentVersion)
 
     def __init__(self, *args):
@@ -51,7 +51,7 @@ class DocumentVersion(Version):
 class Document(VersionedContent):
     """A new style Document.
     """
-    meta_type = 'Silva new Document'
+    meta_type = 'Silva Document'
 
     grok.implements(IDocument)
     silvaconf.version_class(DocumentVersion)
@@ -64,7 +64,7 @@ class DocumentAddForm(silvaforms.SMIAddForm):
     """ Add form for Documents
     """
     silvaconf.context(IDocument)
-    silvaconf.name('Silva new Document')
+    silvaconf.name('Silva Document')
 
     fields = silvaforms.Fields(ITitledContent)
 
