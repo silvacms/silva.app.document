@@ -16,6 +16,7 @@ from zope.traversing.browser import absoluteURL
 
 from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.core import conf as silvaconf
+from silva.core.smi.content import IEditScreen
 from silva.core.conf.interfaces import ITitledContent
 from silva.core.editor.interfaces import ITextIndexEntries
 from silva.core.editor.text import Text
@@ -73,6 +74,7 @@ class DocumentAddForm(silvaforms.SMIAddForm):
 class DocumentEdit(PageREST):
     grok.adapts(Screen, IDocument)
     grok.name('content')
+    grok.implements(IEditScreen)
     grok.require('silva.ChangeSilvaContent')
 
     def payload(self):
