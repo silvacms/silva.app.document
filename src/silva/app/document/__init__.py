@@ -39,8 +39,10 @@ class DocumentInstaller(DefaultInstaller):
 
     def install_custom(self, root):
         if queryUtility(ICKEditorService) is None:
-            root.manage_addProduct['silva.core.editor'].manage_addCKEditorService()
-        root.service_containerpolicy.register('Silva Document', DocumentPolicy, -1)
+            factory = root.manage_addProduct['silva.core.editor']
+            factory.manage_addCKEditorService()
+        root.service_containerpolicy.register(
+            'Silva Document', DocumentPolicy, -1)
 
 
 @grok.subscribe(DocumentInstaller, IInstalledExtensionEvent)
