@@ -12,9 +12,11 @@ from five import grok
 from zope.component import getMultiAdapter, getUtility
 from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
+from zope.publisher.browser import BrowserView
 from zope.traversing.browser import absoluteURL
 
 from silva.app.document.interfaces import IDocument, IDocumentVersion
+from silva.app.document.interfaces import IDocumentDetails
 from silva.core import conf as silvaconf
 from silva.core.smi.content import IEditScreen
 from silva.core.conf.interfaces import ITitledContent
@@ -24,7 +26,6 @@ from silva.core.editor.transform.interfaces import IDisplayFilter
 from silva.core.editor.transform.interfaces import IInputEditorFilter
 from silva.core.interfaces.adapters import IIndexEntries
 from silva.core.references.interfaces import IReferenceService
-from silva.core.references.reference import get_content_from_id
 from silva.core.views import views as silvaviews
 from silva.core.views.interfaces import ISilvaURL
 from silva.translations import translate as _
@@ -64,8 +65,8 @@ class Document(VersionedContent):
 class DocumentAddForm(silvaforms.SMIAddForm):
     """ Add form for Documents
     """
-    silvaconf.context(IDocument)
-    silvaconf.name('Silva Document')
+    grok.context(IDocument)
+    grok.name('Silva Document')
 
     fields = silvaforms.Fields(ITitledContent)
 
@@ -80,7 +81,8 @@ class DocumentEdit(PageREST):
     def payload(self):
         version = self.context.get_editable()
         if version is not None:
-            text = version.body.render(version, self.request, IInputEditorFilter)
+            text = version.body.render(
+                version, self.request, IInputEditorFilter)
 
             return {"ifaces": ["editor"],
                     "name": "body",
@@ -95,45 +97,39 @@ class DocumentEdit(PageREST):
 class DocumentPublicView(silvaviews.View):
     """ Public view for Document
     """
-    silvaconf.context(IDocument)
+    grok.context(IDocument)
 
     def render(self):
         if self.content is not None:
-            return self.content.body.render(self.content, self.request, IDisplayFilter)
+            return self.content.body.render(
+                self.content, self.request, IDisplayFilter)
         return _('This content is not available.')
 
 
-class ThumbnailView(silvaviews.View):
-    """ Thumbnail
+class DocumentDetails(BrowserView):
+    """Give access to part of the document, like a thumbnail or an
+    introduction for it.
     """
-    silvaconf.context(IDocument)
-    silvaconf.name('thumbnail')
-    image = None
-
-    format = u"""<img src="%s?thumbnail" class="silva-thumbnail" />"""
+    grok.implements(IDocumentDetails)
+    DEFAULT_FORMAT = u"""<img src="%s?thumbnail" class="thumbnail" />"""
 
     # XXX this code may be moved to some adapter, so it can be used
     # to get the thumbnail object without a request
-    def get_thumbnail_image(self):
-        tree = lxml.html.fromstring(unicode(self.content.body))
+    def get_thumbnail(self, format=DEFAULT_FORMAT):
+        tree = lxml.html.fromstring(unicode(self.context.body))
         results = tree.xpath("//img[@reference][1]")
         if results:
             image = results[0]
-            ref_name = image.attrib['reference']
             reference_service = getUtility(IReferenceService)
             reference = reference_service.get_reference(
-                self.content, name=ref_name)
-            return get_content_from_id(reference.target_id)
+                self.context, name=image.attrib['reference'])
+            image_content = reference.target
+            return format % absoluteURL(image_content, self.request)
         return None
 
-    def update(self):
-        if self.content:
-            self.image = self.get_thumbnail_image()
-
-    def render(self):
-        if self.image is not None:
-            return self.format % absoluteURL(self.image, self.request)
-        return u""
+    def get_introduction(self, length=128):
+        return self.context.body.render_intro(
+            self.context, self.request, length=128)
 
 
 #Indexes

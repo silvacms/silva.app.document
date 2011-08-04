@@ -15,4 +15,20 @@
   <!-- Grok the package -->
   <grok:grok package="." />
 
+  <view
+     for=".interfaces.IDocumentVersion"
+     factory=".document.DocumentDetails"
+     type="zope.publisher.interfaces.http.IHTTPRequest"
+     permission="zope.Public"
+     provides=".interfaces.IDocumentDetails"
+     />
+
+  <browser:page
+     for=".interfaces.IDocumentVersion"
+     name="details"
+     class=".document.DocumentDetails"
+     permission="zope.Public"
+     allowed_interface=".interfaces.IDocumentDetails"
+     />
+
 </configure>

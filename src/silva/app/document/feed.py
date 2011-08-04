@@ -1,14 +1,18 @@
-from five import grok
-from zope.component import getUtility
+# -*- coding: utf-8 -*-
+# Copyright (c) 2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
-from silva.core.interfaces import IFeedEntry, IVersionManager
 from Products.SilvaMetadata.interfaces import IMetadataService
+from five import grok
+from silva.app.document.interfaces import IDocument, IDocumentDetails
+from silva.core.interfaces import IFeedEntry, IVersionManager
+from zope.component import getUtility, getMultiAdapter
 from zope.traversing.browser import absoluteURL
-from silva.app.document import interfaces
 
 
 class DocumentFeedEntry(grok.MultiAdapter):
-    grok.adapts(interfaces.IDocument)
+    grok.adapts(IDocument)
     grok.provides(IFeedEntry)
 
     def __init__(self, context, request):
@@ -26,7 +30,9 @@ class DocumentFeedEntry(grok.MultiAdapter):
 
     def html_description(self):
         if self.version is not None:
-            return self.version.body.render_intro(self.version, self.request)
+            details = getMultiAdapter(
+                (self.version, self.request), IDocumentDetails)
+            return details.get_intro()
         return u''
 
     def description(self):

@@ -1,4 +1,5 @@
 
+from zope.publisher.interfaces.browser import IBrowserView
 from silva.core import interfaces
 from zope import  schema
 
@@ -17,3 +18,16 @@ class IDocumentVersion(interfaces.IVersion):
         required=True)
 
 
+
+class IDocumentDetails(IBrowserView):
+    """Give access to document details.
+    """
+
+    def get_thumbnail(format):
+        """Return a piece of HTML with the thumbnail of the first
+        document image.
+        """
+
+    def get_introduction(length=128):
+        """Return a piece of HTML with part of the first paragraph.
+        """
