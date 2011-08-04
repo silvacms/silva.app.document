@@ -32,7 +32,7 @@ class DocumentFeedEntry(grok.MultiAdapter):
         if self.version is not None:
             details = getMultiAdapter(
                 (self.version, self.request), IDocumentDetails)
-            return details.get_intro()
+            return details.get_introduction(length=256)
         return u''
 
     def description(self):

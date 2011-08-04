@@ -128,8 +128,11 @@ class DocumentDetails(BrowserView):
         return None
 
     def get_introduction(self, length=128):
-        return self.context.body.render_intro(
-            self.context, self.request, length=128)
+        parts = self.context.body.render_intro(
+            self.context, self.request, max_length=128)
+        if parts:
+            return parts[0]
+        return u''
 
 
 #Indexes
