@@ -30,6 +30,7 @@ from silva.core.views import views as silvaviews
 from silva.core.views.interfaces import ISilvaURL
 from silva.translations import translate as _
 from silva.ui.rest.base import Screen, PageREST
+from silva.ui.rest.container import ListingPreview
 from zeam.form import silva as silvaforms
 
 
@@ -133,6 +134,15 @@ class DocumentDetails(BrowserView):
         if parts:
             return parts[0]
         return u''
+
+
+class DocumentListingPreview(ListingPreview):
+    grok.context(IDocument)
+
+    def preview(self):
+        previewable = self.context.get_previewable()
+        details = getMultiAdapter((previewable, self.request), IDocumentDetails)
+        return details.get_introduction()
 
 
 #Indexes
