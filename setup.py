@@ -5,7 +5,7 @@ version = '1.0dev'
 
 setup(name='silva.app.document',
       version=version,
-      description="Document content for Silva 2.x with WYSIWYG Editor.",
+      description="Document content for Silva 3.x with WYSIWYG Editor.",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
