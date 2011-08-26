@@ -10,6 +10,7 @@ from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.tests.test_xml_export import SilvaXMLTestCase
 from silva.app.document.testing import FunctionalLayer
 from silva.core.editor.testing import save_editor_text
+from silva.core.interfaces.errors import ExternalReferenceError
 
 HTML_REFERENCE = """
 <div>
@@ -42,21 +43,21 @@ class DocumentExportTestCase(SilvaXMLTestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
-        factory = self.root.manage_addProduct['silva.app.document']
-        factory.manage_addDocument('example', 'Example')
-
-    def test_export_references(self):
-        """Test export of mutiple references in one document.
-        """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addFolder('folder', 'Folder')
+        factory = self.root.folder.manage_addProduct['silva.app.document']
+        factory.manage_addDocument('example', 'Example')
+
+    def test_export_reference(self):
+        """Test export of mutiple references in one document.
+        """
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('other', 'Other')
 
         with open_test_file('content-listing.png', globals()) as image_file:
             factory.manage_addImage('image', 'Image', image_file)
 
-        version = self.root.example.get_editable()
+        version = self.root.folder.example.get_editable()
         save_editor_text(
             version.body, HTML_REFERENCE,
             content=version,
@@ -65,17 +66,54 @@ class DocumentExportTestCase(SilvaXMLTestCase):
             link_content=self.root.folder.other,
             link_name=u'document link')
 
-        xml, info = exportToString(self.root)
+        xml, info = exportToString(self.root.folder)
         self.assertExportEqual(
             xml, 'test_export_reference.silvaxml', globs=globals())
+
+    def test_export_reference_external(self):
+        """Test export of references that have targets not in the export tree.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('other', 'Other')
+
+        with open_test_file('content-listing.png', globals()) as image_file:
+            factory.manage_addImage('image', 'Image', image_file)
+
+        version = self.root.folder.example.get_editable()
+        save_editor_text(
+            version.body, HTML_REFERENCE,
+            content=version,
+            image_content=self.root.image,
+            image_name=u'document image',
+            link_content=self.root.other,
+            link_name=u'document link')
+
+        self.assertRaises(
+            ExternalReferenceError, exportToString, self.root.folder)
+
+    def test_export_reference_broken(self):
+        """Test export of broken and missing references.
+        """
+        version = self.root.folder.example.get_editable()
+        save_editor_text(
+            version.body, HTML_REFERENCE,
+            content=version,
+            image_content=None,
+            image_name=u'document image',
+            link_content=None,
+            link_name=u'document link')
+
+        xml, info = exportToString(self.root.folder)
+        self.assertExportEqual(
+            xml, 'test_export_reference_broken.silvaxml', globs=globals())
 
     def test_export_multiple_root(self):
         """Test export of an HTML tag that have multiple root elements.
         """
-        version = self.root.example.get_editable()
+        version = self.root.folder.example.get_editable()
         save_editor_text(version.body, HTML_MULTIPLE)
 
-        xml, info = exportToString(self.root)
+        xml, info = exportToString(self.root.folder)
         self.assertExportEqual(
             xml, 'test_export_multiple.silvaxml', globs=globals())
 

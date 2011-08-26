@@ -108,7 +108,7 @@
                 <html:p>
                   then comes a
                   <html:a class="link"
-                          reference="folder/other"
+                          reference=""
                           reference-type="document link"
                           target="_self">
                     link
@@ -119,7 +119,7 @@
                 </html:p>
                 <html:div class="image default">
                   <html:img alt="location.png"
-                            reference="folder/image"
+                            reference=""
                             reference-type="document image">
                   </html:img>
                   <html:span class="image-caption">
@@ -131,54 +131,6 @@
           </silva-app-document:body>
         </content>
       </silva-app-document:document>
-      <unknown_content id="other" meta_type="Mockup VersionedContent">
-        <zexp id="1.zexp">
-        </zexp>
-      </unknown_content>
-      <image id="image" web_crop="" web_format="PNG" web_scale="100%">
-        <metadata>
-          <set id="silva-content">
-            <silva-content:maintitle>
-              Image
-            </silva-content:maintitle>
-            <silva-content:shorttitle>
-            </silva-content:shorttitle>
-          </set>
-          <set id="silva-extra">
-            <silva-extra:comment>
-            </silva-extra:comment>
-            <silva-extra:contactemail>
-            </silva-extra:contactemail>
-            <silva-extra:contactname>
-            </silva-extra:contactname>
-            <silva-extra:content_description>
-            </silva-extra:content_description>
-            <silva-extra:creationtime>
-              YYYY-MM-DDTHH:MM:SS
-            </silva-extra:creationtime>
-            <silva-extra:creator>
-              manager
-            </silva-extra:creator>
-            <silva-extra:hide_from_tocs>
-              do not hide
-            </silva-extra:hide_from_tocs>
-            <silva-extra:keywords>
-            </silva-extra:keywords>
-            <silva-extra:language>
-            </silva-extra:language>
-            <silva-extra:lastauthor>
-              unknown
-            </silva-extra:lastauthor>
-            <silva-extra:modificationtime>
-              YYYY-MM-DDTHH:MM:SS
-            </silva-extra:modificationtime>
-            <silva-extra:subject>
-            </silva-extra:subject>
-          </set>
-        </metadata>
-        <asset id="1">
-        </asset>
-      </image>
     </content>
   </folder>
 </silva>
