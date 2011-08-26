@@ -3,6 +3,10 @@ import os
 
 version = '1.0dev'
 
+tests_require = [
+    'Products.Silva [test]',
+    ]
+
 setup(name='silva.app.document',
       version=version,
       description="Document content for Silva 3.x with WYSIWYG Editor.",
@@ -35,4 +39,6 @@ setup(name='silva.app.document',
         'zope.component',
         'zope.interface',
       ],
+      tests_require = tests_require,
+      extras_require = {'test': tests_require},
       )

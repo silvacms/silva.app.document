@@ -1,10 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <silva xmlns="http://infrae.com/namespace/silva"
-    xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content"
-    xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra"
-    xmlns:silvaappdoc="http://infrae.com/namespace/silva.app.document"
-    xmlns:silvacoreeditor="http://infrae.com/namespace/silva.core.editor"
-    silva_version="Silva 3.0a1dev">
-  <silvaappdoc:document id="adoc">
+       xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content"
+       xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra"
+       xmlns:silva-app-document="http://infrae.com/namespace/silva-app-document"
+       xmlns:silva-core-editor="http://infrae.com/namespace/silva-core-editor"
+       xmlns:html="http://www.w3.org/1999/xhtml"
+       silva_version="Silva 3.0a1dev">
+  <silva-app-document:document id="document">
     <workflow>
       <version id="0">
         <status>public</status>
@@ -35,14 +37,18 @@
           <silva-extra:subject/>
         </set>
       </metadata>
-      <silvaappdoc:body>
-        <text xmlns:ns00="http://www.w3.org/1999/xhtml" xmlns="http://infrae.com/namespace/silva.core.editor">
-          <ns00:div>
-            <ns00:h1>Welcome to Silva!</ns00:h1>
-            <ns00:p>Welcome to Silva! This is the public view. To actually see something interesting, try adding '/edit' to your url (if you're not already editing, you can <ns00:a href="edit">click this link</ns00:a>).</ns00:p>
-          </ns00:div>
-        </text>
-      </silvaappdoc:body>
+      <silva-app-document:body>
+        <silva-core-editor:text>
+          <html:div>
+            <html:h1>Welcome to Silva!</html:h1>
+            <html:p>Welcome to Silva! This is the public view. To actually see something interesting, try adding '/edit' to your url (if you're not already editing, you can <html:a href="edit">click this link</html:a>).
+            </html:p>
+          </html:div>
+          <html:div>
+            <html:p>I forgot to tell you that this is valid.</html:p>
+          </html:div>
+        </silva-core-editor:text>
+      </silva-app-document:body>
     </content>
-  </silvaappdoc:document>
+  </silva-app-document:document>
 </silva>

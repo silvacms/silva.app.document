@@ -1,0 +1,211 @@
+<?xml version='1.0' encoding='utf-8'?>
+<silva xmlns="http://infrae.com/namespace/silva"
+       {namespaces} silva_version="{version}">
+  <publication id="root">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>
+          root
+        </silva-content:maintitle>
+        <silva-content:shorttitle>
+        </silva-content:shorttitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:comment>
+        </silva-extra:comment>
+        <silva-extra:contactemail>
+        </silva-extra:contactemail>
+        <silva-extra:contactname>
+        </silva-extra:contactname>
+        <silva-extra:content_description>
+        </silva-extra:content_description>
+        <silva-extra:creationtime>
+          YYYY-MM-DDTHH:MM:SS
+        </silva-extra:creationtime>
+        <silva-extra:creator>
+          manager
+        </silva-extra:creator>
+        <silva-extra:hide_from_tocs>
+          do not hide
+        </silva-extra:hide_from_tocs>
+        <silva-extra:keywords>
+        </silva-extra:keywords>
+        <silva-extra:language>
+        </silva-extra:language>
+        <silva-extra:lastauthor>
+          unknown
+        </silva-extra:lastauthor>
+        <silva-extra:modificationtime>
+          YYYY-MM-DDTHH:MM:SS
+        </silva-extra:modificationtime>
+        <silva-extra:subject>
+        </silva-extra:subject>
+      </set>
+      <set xmlns:silvalayout="http://infrae.com/namespace/metadata/silva-layout" id="silva-layout">
+        <silvalayout:skin>
+          Standard Issue
+        </silvalayout:skin>
+      </set>
+    </metadata>
+    <content>
+      <default>
+        <silva-app-document:document id="index">
+          <workflow>
+            <version id="0">
+              <status>
+                public
+              </status>
+              <publication_datetime>
+                YYYY-MM-DDTHH:MM:SS
+              </publication_datetime>
+              <expiration_datetime>
+              </expiration_datetime>
+            </version>
+          </workflow>
+          <content version_id="0">
+            <metadata>
+              <set id="silva-content">
+                <silva-content:maintitle>
+                  Welcome to Silva!
+                </silva-content:maintitle>
+                <silva-content:shorttitle>
+                </silva-content:shorttitle>
+              </set>
+              <set id="silva-extra">
+                <silva-extra:comment>
+                </silva-extra:comment>
+                <silva-extra:contactemail>
+                </silva-extra:contactemail>
+                <silva-extra:contactname>
+                </silva-extra:contactname>
+                <silva-extra:content_description>
+                </silva-extra:content_description>
+                <silva-extra:creationtime>
+                  YYYY-MM-DDTHH:MM:SS
+                </silva-extra:creationtime>
+                <silva-extra:creator>
+                  manager
+                </silva-extra:creator>
+                <silva-extra:hide_from_tocs>
+                  do not hide
+                </silva-extra:hide_from_tocs>
+                <silva-extra:keywords>
+                </silva-extra:keywords>
+                <silva-extra:language>
+                </silva-extra:language>
+                <silva-extra:lastauthor>
+                  manager
+                </silva-extra:lastauthor>
+                <silva-extra:modificationtime>
+                  YYYY-MM-DDTHH:MM:SS
+                </silva-extra:modificationtime>
+                <silva-extra:subject>
+                </silva-extra:subject>
+              </set>
+            </metadata>
+            <silva-app-document:body>
+              <silva-core-editor:text>
+                <html:div>
+                  <html:h1>
+                    Welcome to Silva!
+                  </html:h1>
+                  <html:p>
+                    Welcome to Silva! This is the public view. To actually see something interesting, try adding '/edit' to your url (if you're not already editing, you can
+                    <html:a href="edit">
+                      click this link
+                    </html:a>
+                    ).
+                  </html:p>
+                </html:div>
+              </silva-core-editor:text>
+            </silva-app-document:body>
+          </content>
+        </silva-app-document:document>
+      </default>
+      <silva-app-document:document id="example">
+        <workflow>
+          <version id="0">
+            <status>
+              unapproved
+            </status>
+            <publication_datetime>
+            </publication_datetime>
+            <expiration_datetime>
+            </expiration_datetime>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>
+                Example
+              </silva-content:maintitle>
+              <silva-content:shorttitle>
+              </silva-content:shorttitle>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:comment>
+              </silva-extra:comment>
+              <silva-extra:contactemail>
+              </silva-extra:contactemail>
+              <silva-extra:contactname>
+              </silva-extra:contactname>
+              <silva-extra:content_description>
+              </silva-extra:content_description>
+              <silva-extra:creationtime>
+                YYYY-MM-DDTHH:MM:SS
+              </silva-extra:creationtime>
+              <silva-extra:creator>
+                manager
+              </silva-extra:creator>
+              <silva-extra:hide_from_tocs>
+                do not hide
+              </silva-extra:hide_from_tocs>
+              <silva-extra:keywords>
+              </silva-extra:keywords>
+              <silva-extra:language>
+              </silva-extra:language>
+              <silva-extra:lastauthor>
+                unknown
+              </silva-extra:lastauthor>
+              <silva-extra:modificationtime>
+                YYYY-MM-DDTHH:MM:SS
+              </silva-extra:modificationtime>
+              <silva-extra:subject>
+              </silva-extra:subject>
+            </set>
+          </metadata>
+          <silva-app-document:body>
+            <silva-core-editor:text>
+              <html:div>
+                <html:h1>
+                  Hello world
+                </html:h1>
+                <html:p>
+                  This is a nice text
+                </html:p>
+                <html:img src="somewhere.gif">
+                </html:img>
+              </html:div>
+              <html:p class="footnote">
+                This is a foot that have a
+                <html:i>
+                  note
+                </html:i>
+              </html:p>
+              .
+            </silva-core-editor:text>
+          </silva-app-document:body>
+        </content>
+      </silva-app-document:document>
+      <unknown_content id="cs_toc" meta_type="Silva Code Source">
+        <zexp id="1.zexp">
+        </zexp>
+      </unknown_content>
+      <unknown_content id="cs_citation" meta_type="Silva Code Source">
+        <zexp id="2.zexp">
+        </zexp>
+      </unknown_content>
+    </content>
+  </publication>
+</silva>

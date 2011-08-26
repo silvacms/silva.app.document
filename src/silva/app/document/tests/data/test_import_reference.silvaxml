@@ -1,8 +1,15 @@
-<silva xmlns="http://infrae.com/namespace/silva" xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content" xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra" xmlns:silvaappdoc="http://infrae.com/namespace/silva.app.document" xmlns:silvacoreeditor="http://infrae.com/namespace/silva.core.editor" silva_version="Silva 3.0a1dev">
-  <publication id="root">
+<?xml version="1.0" encoding="utf-8"?>
+<silva xmlns="http://infrae.com/namespace/silva"
+       xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content"
+       xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra"
+       xmlns:silva-app-document="http://infrae.com/namespace/silva-app-document"
+       xmlns:silva-core-editor="http://infrae.com/namespace/silva-core-editor"
+       xmlns:html="http://www.w3.org/1999/xhtml"
+       silva_version="Silva 3.0a1dev">
+  <publication id="folder">
     <metadata>
       <set id="silva-content">
-        <silva-content:maintitle>root</silva-content:maintitle>
+        <silva-content:maintitle>Import folder</silva-content:maintitle>
         <silva-content:shorttitle/>
       </set>
       <set id="silva-extra">
@@ -27,7 +34,7 @@
     </metadata>
     <content>
       <default>
-        <silvaappdoc:document id="index">
+        <silva-app-document:document id="index">
           <workflow>
             <version id="0">
               <status>public</status>
@@ -58,18 +65,18 @@
                 <silva-extra:subject/>
               </set>
             </metadata>
-            <silvaappdoc:body>
-              <text xmlns:ns00="http://www.w3.org/1999/xhtml" xmlns="http://infrae.com/namespace/silva.core.editor">
-                <ns00:div>
-                  <ns00:h1>Welcome to Silva!</ns00:h1>
-                  <ns00:p>Welcome to Silva! This is the public view. To actually see something interesting, try adding '/edit' to your url (if you're not already editing, you can <ns00:a href="edit">click this link</ns00:a>).</ns00:p>
-                </ns00:div>
-              </text>
-            </silvaappdoc:body>
+            <silva-app-document:body>
+              <silva-core-editor:text>
+                <html:div>
+                  <html:h1>Welcome to Silva!</html:h1>
+                  <html:p>Welcome to Silva! This is the public view. To actually see something interesting, try adding '/edit' to your url (if you're not already editing, you can <html:a href="edit">click this link</html:a>).</html:p>
+                </html:div>
+              </silva-core-editor:text>
+            </silva-app-document:body>
           </content>
-        </silvaappdoc:document>
+        </silva-app-document:document>
       </default>
-      <silvaappdoc:document id="example">
+      <silva-app-document:document id="example">
         <workflow>
           <version id="0">
             <status>unapproved</status>
@@ -100,23 +107,25 @@
               <silva-extra:subject/>
             </set>
           </metadata>
-          <silvaappdoc:body>
-            <text xmlns:ns00="http://www.w3.org/1999/xhtml" xmlns="http://infrae.com/namespace/silva.core.editor">
-              <ns00:div>
-  <ns00:h1>Example</ns00:h1>
-  <ns00:p>
-    here is a paragraph...</ns00:p>
-  <ns00:p>
-    then comes a <ns00:a class="link" reference="root/folder/other" reference-name="93094ba8-70bd-11e0-b805-c42c0338b1a2" target="_self">link</ns00:a></ns00:p>
-  <ns00:p>then comes an image :</ns00:p>
-  <ns00:div class="image default">
-    <ns00:img alt="location.png" reference="root/folder/img" reference-name="a5c84b4a-70bd-11e0-8c0a-c42c0338b1a2"/><ns00:span class="image-caption">location.png</ns00:span>
-  </ns00:div>
-</ns00:div>
-            </text>
-          </silvaappdoc:body>
+          <silva-app-document:body>
+            <silva-core-editor:text>
+              <html:div>
+                <html:h1>Example</html:h1>
+                <html:p>
+                  here is a paragraph...</html:p>
+                <html:p>
+                  then comes a <html:a class="link" reference="folder" reference-type="document link" target="_self">link</html:a>
+                </html:p>
+                <html:p>then comes an image :</html:p>
+                <html:div class="image default">
+                  <html:img alt="location.png" reference="folder/folder/image" reference-type="document image"/>
+                  <html:span class="image-caption">location.png</html:span>
+                </html:div>
+              </html:div>
+            </silva-core-editor:text>
+          </silva-app-document:body>
         </content>
-      </silvaappdoc:document>
+      </silva-app-document:document>
       <folder id="folder">
         <metadata>
           <set id="silva-content">
@@ -141,7 +150,7 @@
           </set>
         </metadata>
         <content>
-          <image_asset id="img" web_crop="" web_format="PNG" web_scale="100%">
+          <image id="image" web_crop="" web_format="PNG" web_scale="100%">
             <metadata>
               <set id="silva-content">
                 <silva-content:maintitle>Image</silva-content:maintitle>
@@ -164,8 +173,8 @@
                 <silva-extra:subject/>
               </set>
             </metadata>
-            <asset_id>1</asset_id>
-          </image_asset>
+            <asset id="1" />
+          </image>
         </content>
       </folder>
     </content>

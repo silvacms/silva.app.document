@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<silva xmlns="http://infrae.com/namespace/silva"
+       xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content"
+       xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra"
+       xmlns:silva-app-document="http://infrae.com/namespace/silva-app-document"
+       xmlns:silva-core-editor="http://infrae.com/namespace/silva-core-editor"
+       xmlns:html="http://www.w3.org/1999/xhtml"
+       silva_version="Silva 3.0a1dev">
+  <publication id="folder">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>Import folder</silva-content:maintitle>
+        <silva-content:shorttitle/>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:comment/>
+        <silva-extra:contactemail/>
+        <silva-extra:contactname/>
+        <silva-extra:content_description/>
+        <silva-extra:creationtime/>
+        <silva-extra:creator>manager</silva-extra:creator>
+        <silva-extra:expirationtime/>
+        <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
+        <silva-extra:keywords/>
+        <silva-extra:language/>
+        <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
+        <silva-extra:modificationtime>2011-05-19T13:33:40Z</silva-extra:modificationtime>
+        <silva-extra:publicationtime/>
+        <silva-extra:subject/>
+      </set>
+      <set xmlns:silvalayout="http://infrae.com/namespace/metadata/silva-layout" id="silva-layout">
+        <silvalayout:skin>Standard Issue</silvalayout:skin>
+      </set>
+    </metadata>
+    <content>
+      <silva-app-document:document id="broken">
+        <workflow>
+          <version id="0">
+            <status>public</status>
+            <publication_datetime/>
+            <expiration_datetime/>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>Broken Example</silva-content:maintitle>
+              <silva-content:shorttitle/>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:comment/>
+              <silva-extra:contactemail/>
+              <silva-extra:contactname/>
+              <silva-extra:content_description/>
+              <silva-extra:creationtime>2011-05-19T13:33:40Z</silva-extra:creationtime>
+              <silva-extra:creator>manager</silva-extra:creator>
+              <silva-extra:expirationtime/>
+              <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
+              <silva-extra:keywords/>
+              <silva-extra:language/>
+              <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
+              <silva-extra:modificationtime>2011-05-19T13:33:40Z</silva-extra:modificationtime>
+              <silva-extra:publicationtime/>
+              <silva-extra:subject/>
+            </set>
+          </metadata>
+          <silva-app-document:body>
+            <silva-core-editor:text>
+              <html:div>
+                <html:h1>Broken Example</html:h1>
+                <html:p>
+                  Test of broken reference.
+                </html:p>
+                <html:p>
+                  Here is the broken stuff:
+                  <html:a class="link"
+                          reference="somewhere"
+                          reference-type="document link"
+                          target="_self">link</html:a>
+                </html:p>
+                <html:p>There comes a broken image :</html:p>
+                <html:div class="image default">
+                  <html:a class="image-link"
+                          reference="publication"
+                          reference-type="document image link">
+                    <html:img alt="location.png"
+                              reference="folder/awesome_image"
+                              reference-type="document image" />
+                    <html:span class="image-caption">
+                      This is broken image
+                    </html:span>
+                  </html:a>
+                </html:div>
+              </html:div>
+            </silva-core-editor:text>
+          </silva-app-document:body>
+        </content>
+      </silva-app-document:document>
+      <folder id="folder">
+        <metadata>
+          <set id="silva-content">
+            <silva-content:maintitle>Folder</silva-content:maintitle>
+            <silva-content:shorttitle/>
+          </set>
+          <set id="silva-extra">
+            <silva-extra:comment/>
+            <silva-extra:contactemail/>
+            <silva-extra:contactname/>
+            <silva-extra:content_description/>
+            <silva-extra:creationtime>2011-05-19T13:33:40Z</silva-extra:creationtime>
+            <silva-extra:creator>manager</silva-extra:creator>
+            <silva-extra:expirationtime/>
+            <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
+            <silva-extra:keywords/>
+            <silva-extra:language/>
+            <silva-extra:lastauthor>unknown</silva-extra:lastauthor>
+            <silva-extra:modificationtime>2011-05-19T13:33:40Z</silva-extra:modificationtime>
+            <silva-extra:publicationtime/>
+            <silva-extra:subject/>
+          </set>
+        </metadata>
+        <content>
+        </content>
+      </folder>
+    </content>
+  </publication>
+</silva>
