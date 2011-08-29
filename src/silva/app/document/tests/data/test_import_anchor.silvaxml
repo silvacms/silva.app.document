@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<silva xmlns="http://infrae.com/namespace/silva"
+       xmlns:silva-content="http://infrae.com/namespace/metadata/silva-content"
+       xmlns:silva-extra="http://infrae.com/namespace/metadata/silva-extra"
+       xmlns:silva-app-document="http://infrae.com/namespace/silva-app-document"
+       xmlns:silva-core-editor="http://infrae.com/namespace/silva-core-editor"
+       xmlns:html="http://www.w3.org/1999/xhtml"
+       silva_version="Silva 3.0a1dev">
+  <folder id="folder">
+    <metadata>
+      <set id="silva-content">
+        <silva-content:maintitle>
+          Folder
+        </silva-content:maintitle>
+        <silva-content:shorttitle>
+        </silva-content:shorttitle>
+      </set>
+      <set id="silva-extra">
+        <silva-extra:comment>
+        </silva-extra:comment>
+        <silva-extra:contactemail>
+        </silva-extra:contactemail>
+        <silva-extra:contactname>
+        </silva-extra:contactname>
+        <silva-extra:content_description>
+        </silva-extra:content_description>
+        <silva-extra:creationtime>
+          2011-05-19T13:33:40Z
+        </silva-extra:creationtime>
+        <silva-extra:creator>
+          manager
+        </silva-extra:creator>
+        <silva-extra:hide_from_tocs>
+          do not hide
+        </silva-extra:hide_from_tocs>
+        <silva-extra:keywords>
+        </silva-extra:keywords>
+        <silva-extra:language>
+        </silva-extra:language>
+        <silva-extra:lastauthor>
+          unknown
+        </silva-extra:lastauthor>
+        <silva-extra:modificationtime>
+          2011-05-19T13:33:40Z
+        </silva-extra:modificationtime>
+        <silva-extra:subject>
+        </silva-extra:subject>
+      </set>
+    </metadata>
+    <content>
+      <silva-app-document:document id="anchor">
+        <workflow>
+          <version id="0">
+            <status>
+              public
+            </status>
+            <publication_datetime>
+            </publication_datetime>
+            <expiration_datetime>
+            </expiration_datetime>
+          </version>
+        </workflow>
+        <content version_id="0">
+          <metadata>
+            <set id="silva-content">
+              <silva-content:maintitle>
+                Anchor's document
+              </silva-content:maintitle>
+              <silva-content:shorttitle>
+              </silva-content:shorttitle>
+            </set>
+            <set id="silva-extra">
+              <silva-extra:comment>
+              </silva-extra:comment>
+              <silva-extra:contactemail>
+              </silva-extra:contactemail>
+              <silva-extra:contactname>
+              </silva-extra:contactname>
+              <silva-extra:content_description>
+              </silva-extra:content_description>
+              <silva-extra:creationtime>
+                2011-05-19T13:33:40Z
+              </silva-extra:creationtime>
+              <silva-extra:creator>
+                Paul
+              </silva-extra:creator>
+              <silva-extra:hide_from_tocs>
+                do not hide
+              </silva-extra:hide_from_tocs>
+              <silva-extra:keywords>
+              </silva-extra:keywords>
+              <silva-extra:language>
+              </silva-extra:language>
+              <silva-extra:lastauthor>
+                Henri
+              </silva-extra:lastauthor>
+              <silva-extra:modificationtime>
+                2011-05-19T13:33:40Z
+              </silva-extra:modificationtime>
+              <silva-extra:subject>
+              </silva-extra:subject>
+            </set>
+          </metadata>
+          <silva-app-document:body>
+            <silva-core-editor:text>
+              <html:div>
+                <html:h1>
+                  This is a document with anchors
+                </html:h1>
+                <html:p>
+                  Ok let's rock an anchor right here, right, now.
+                  <html:a class="anchor" name="rock"
+                          title="Rock that anchor"></html:a>
+                </html:p>
+                <html:h2>A another story</html:h2>
+                <html:a class="anchor" name="pop"
+                        title="That will pop your mind"></html:a>
+                <html:p>
+                  Well, the bar came two people. And I sucks actually at
+                  telling stories, so I will let you continue this fantasy.
+                  <html:b>I have a test to write afterall.</html:b>
+                </html:p>
+              </html:div>
+            </silva-core-editor:text>
+          </silva-app-document:body>
+        </content>
+      </silva-app-document:document>
+    </content>
+  </folder>
+</silva>

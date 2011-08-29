@@ -10,10 +10,12 @@ from zope.component import getUtility
 from zope.interface.verify import verifyObject
 
 from Products.Silva.tests.test_xml_import import SilvaXMLTestCase
-from silva.app.document.testing import FunctionalLayer
 from silva.app.document.interfaces import IDocument, IDocumentVersion
+from silva.app.document.testing import FunctionalLayer
+from silva.core.editor.interfaces import ITextIndexEntries
 from silva.core.interfaces.events import IContentImported
 from silva.core.references.interfaces import IReferenceService
+from silva.core.interfaces.adapters import IIndexEntries
 
 
 class DocumentImportTestCase(SilvaXMLTestCase):
@@ -125,6 +127,42 @@ class DocumentImportTestCase(SilvaXMLTestCase):
         self.assertEqual(image_reference.target, None)
         self.assertEqual(image_link_reference.target, None)
 
+    def test_import_anchor(self):
+        """Test importing a document that contains anchor, and check
+        they are reported to the indexes.
+        """
+        self.import_file(
+            'test_import_anchor.silvaxml', globs=globals())
+        self.assertEventsAre(
+            ['ContentImported for /root/folder',
+             'ContentImported for /root/folder/anchor',],
+            IContentImported)
+        self.assertEqual(
+            self.root.folder.objectIds(),
+            ['anchor'])
+
+        document = self.root.folder.anchor
+        self.assertTrue(verifyObject(IDocument, document))
+        self.assertNotEqual(document.get_viewable(), None)
+        self.assertEqual(document.get_editable(), None)
+
+        version = document.get_viewable()
+        self.assertTrue(verifyObject(IDocumentVersion, version))
+
+        index = ITextIndexEntries(version.body)
+        self.assertTrue(verifyObject(ITextIndexEntries, index))
+        self.assertEqual(len(index.entries), 2)
+        self.assertEqual(
+            map(lambda e: (e.anchor, e.title), index.entries),
+            [('rock', 'Rock that anchor'), ('pop', 'That will pop your mind')])
+
+        index = IIndexEntries(document)
+        self.assertTrue(verifyObject(IIndexEntries, index))
+        self.assertEqual(index.get_title(), 'Anchor\'s document')
+        self.assertEqual(len(index.get_entries()), 2)
+        self.assertEqual(
+            index.get_entries(),
+            [('rock', 'Rock that anchor'), ('pop', 'That will pop your mind')])
 
 def test_suite():
     suite = unittest.TestSuite()

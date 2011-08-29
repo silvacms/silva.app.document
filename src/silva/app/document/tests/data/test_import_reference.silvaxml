@@ -45,7 +45,9 @@
           <content version_id="0">
             <metadata>
               <set id="silva-content">
-                <silva-content:maintitle>Welcome to Silva!</silva-content:maintitle>
+                <silva-content:maintitle>
+                  Welcome to Silva!
+                </silva-content:maintitle>
                 <silva-content:shorttitle/>
               </set>
               <set id="silva-extra">
@@ -53,15 +55,19 @@
                 <silva-extra:contactemail/>
                 <silva-extra:contactname/>
                 <silva-extra:content_description/>
-                <silva-extra:creationtime>2011-05-19T13:33:40Z</silva-extra:creationtime>
+                <silva-extra:creationtime
+                   >2011-05-19T13:33:40Z
+                </silva-extra:creationtime>
                 <silva-extra:creator>manager</silva-extra:creator>
-                <silva-extra:expirationtime/>
-                <silva-extra:hide_from_tocs>do not hide</silva-extra:hide_from_tocs>
+                <silva-extra:hide_from_tocs>
+                  do not hide
+                </silva-extra:hide_from_tocs>
                 <silva-extra:keywords/>
                 <silva-extra:language/>
                 <silva-extra:lastauthor>manager</silva-extra:lastauthor>
-                <silva-extra:modificationtime>2011-05-19T13:33:40Z</silva-extra:modificationtime>
-                <silva-extra:publicationtime/>
+                <silva-extra:modificationtime>
+                  2011-05-19T13:33:40Z
+                </silva-extra:modificationtime>
                 <silva-extra:subject/>
               </set>
             </metadata>
