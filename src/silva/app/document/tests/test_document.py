@@ -5,12 +5,21 @@
 
 import unittest
 
-from silva.app.document.interfaces import IDocument, IDocumentVersion
-from silva.app.document.testing import FunctionalLayer
-from silva.core.services.interfaces import ICatalogService
+
 from zope.interface.verify import verifyObject
 from zope.component import getUtility
 
+from silva.app.document.interfaces import IDocument, IDocumentVersion
+from silva.app.document.testing import FunctionalLayer
+from silva.core.editor.testing import save_editor_text
+from silva.core.services.interfaces import ICatalogService
+
+HTML_CATALOG = """
+<div>
+  <h1>Example to catalog test</h1>
+  <p>This is a ultimate catalog test</p>
+</div>
+"""
 
 class DocumentTestCase(unittest.TestCase):
     layer = FunctionalLayer
@@ -42,11 +51,23 @@ class DocumentTestCase(unittest.TestCase):
         factory = self.root.manage_addProduct['silva.app.document']
         factory.manage_addDocument('document', 'Test Document')
 
+        version = self.root.document.get_editable()
+        save_editor_text(version.body, HTML_CATALOG, content=version)
+
         catalog = getUtility(ICatalogService)
+
+        # Test appear in the title.
         results = list(catalog(fulltext='Test'))
         self.assertEqual(len(results), 1)
         result = results[0].getObject()
         self.assertEqual(result, self.root.document.get_editable())
+
+        # Catalog appear in the body text.
+        results = list(catalog(fulltext='catalog'))
+        self.assertEqual(len(results), 1)
+        result = results[0].getObject()
+        self.assertEqual(result, self.root.document.get_editable())
+
 
 
 def test_suite():
