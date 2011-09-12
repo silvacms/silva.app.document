@@ -68,6 +68,16 @@ class DocumentTestCase(unittest.TestCase):
         result = results[0].getObject()
         self.assertEqual(result, self.root.document.get_editable())
 
+    def test_indexes(self):
+        """Test indexes.
+        """
+        # Editable, published
+        assert False, 'TBD'
+
+    def test_details(self):
+        """Test details (intro, thumbnail).
+        """
+        assert False, 'TBD'
 
 
 def test_suite():

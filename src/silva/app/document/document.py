@@ -34,7 +34,6 @@ from silva.ui.rest.container import ListingPreview
 from zeam.form import silva as silvaforms
 
 
-
 # Version class for the content
 class DocumentVersion(Version):
     """Version of a document object.

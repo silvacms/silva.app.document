@@ -125,6 +125,32 @@
           </silva-app-document:body>
         </content>
       </silva-app-document:document>
+      <indexer id="indexer">
+        <metadata>
+          <set id="silva-content">
+            <silva-content:maintitle>
+              Index of this import
+            </silva-content:maintitle>
+          </set>
+          <set id="silva-extra">
+            <silva-extra:creationtime>
+              2004-04-23T16:13:39Z
+            </silva-extra:creationtime>
+            <silva-extra:creator>
+              Arthur
+            </silva-extra:creator>
+            <silva-extra:hide_from_tocs>
+              do not hide
+            </silva-extra:hide_from_tocs>
+            <silva-extra:lastauthor>
+              Arthur
+            </silva-extra:lastauthor>
+            <silva-extra:modificationtime>
+              2004-04-23T16:13:39Z
+            </silva-extra:modificationtime>
+          </set>
+        </metadata>
+      </indexer>
     </content>
   </folder>
 </silva>

@@ -13,9 +13,10 @@ from Products.Silva.tests.test_xml_import import SilvaXMLTestCase
 from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.app.document.testing import FunctionalLayer
 from silva.core.editor.interfaces import ITextIndexEntries
+from silva.core.interfaces import IIndexer
+from silva.core.interfaces.adapters import IIndexEntries
 from silva.core.interfaces.events import IContentImported
 from silva.core.references.interfaces import IReferenceService
-from silva.core.interfaces.adapters import IIndexEntries
 
 
 class DocumentImportTestCase(SilvaXMLTestCase):
@@ -135,11 +136,12 @@ class DocumentImportTestCase(SilvaXMLTestCase):
             'test_import_anchor.silvaxml', globs=globals())
         self.assertEventsAre(
             ['ContentImported for /root/folder',
-             'ContentImported for /root/folder/anchor',],
+             'ContentImported for /root/folder/anchor',
+             'ContentImported for /root/folder/indexer'],
             IContentImported)
         self.assertEqual(
             self.root.folder.objectIds(),
-            ['anchor'])
+            ['anchor', 'indexer'])
 
         document = self.root.folder.anchor
         self.assertTrue(verifyObject(IDocument, document))
@@ -163,6 +165,19 @@ class DocumentImportTestCase(SilvaXMLTestCase):
         self.assertEqual(
             index.get_entries(),
             [('rock', 'Rock that anchor'), ('pop', 'That will pop your mind')])
+
+        # Verify that the entries are available in the indexer
+        indexer = self.root.folder.indexer
+        self.assertTrue(verifyObject(IIndexer, indexer))
+        self.assertEqual(
+            indexer.get_index_names(),
+            ['Rock that anchor', 'That will pop your mind'])
+        self.assertEqual(
+            len(indexer.get_index_entry('Rock that anchor')),
+            1)
+        self.assertEqual(
+            len(indexer.get_index_entry('That will pop your mind')),
+            1)
 
 def test_suite():
     suite = unittest.TestSuite()
