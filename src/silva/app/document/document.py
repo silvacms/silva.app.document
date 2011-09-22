@@ -7,6 +7,7 @@ import lxml.html
 
 from Products.Silva.Version import Version
 from Products.Silva.VersionedContent import VersionedContent
+from AccessControl.security import checkPermission
 
 from five import grok
 from zope.component import getMultiAdapter, getUtility
@@ -76,17 +77,18 @@ class DocumentEdit(PageREST):
     grok.adapts(Screen, IDocument)
     grok.name('content')
     grok.implements(IEditScreen)
-    grok.require('silva.ChangeSilvaContent')
+    grok.require('silva.ReadSilvaContent')
 
     def payload(self):
-        version = self.context.get_editable()
-        if version is not None:
-            text = version.body.render(
-                version, self.request, IInputEditorFilter)
+        if checkPermission('silva.ChangeSilvaContent', self.context):
+            version = self.context.get_editable()
+            if version is not None:
+                text = version.body.render(
+                    version, self.request, IInputEditorFilter)
 
-            return {"ifaces": ["editor"],
-                    "name": "body",
-                    "text": text}
+                return {"ifaces": ["editor"],
+                        "name": "body",
+                        "text": text}
 
         url = getMultiAdapter((self.context, self.request), ISilvaURL).preview()
         return {"ifaces": ["preview"],
