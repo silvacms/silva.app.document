@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0dev'
+version = '3.0b1'
 
 tests_require = [
     'Products.Silva [test]',
@@ -27,17 +27,26 @@ setup(name='silva.app.document',
       include_package_data=True,
       zip_safe=True,
       install_requires=[
+        'Products.Silva',
+        'Products.SilvaMetadata',
+        'Products.SilvaExternalSources',
         'five.grok',
+        'lxml',
         'setuptools',
         'silva.core.conf',
         'silva.core.editor',
         'silva.core.interfaces',
         'silva.core.references',
+        'silva.core.smi',
         'silva.core.views',
         'silva.translations',
         'silva.ui',
+        'zeam.form.silva',
         'zope.component',
         'zope.interface',
+        'zope.publisher',
+        'zope.schema',
+        'zope.traversing',
       ],
       tests_require = tests_require,
       extras_require = {'test': tests_require},

@@ -1,0 +1,3 @@
+recursive-include src *.png *.py *.silvaxml *.zcml
+recursive-include docs *.txt
+include README.txt
