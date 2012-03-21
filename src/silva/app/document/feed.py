@@ -5,14 +5,15 @@
 
 from Products.SilvaMetadata.interfaces import IMetadataService
 from five import grok
-from silva.app.document.interfaces import IDocument, IDocumentDetails
-from silva.core.interfaces import IFeedEntry, IVersionManager
 from zope.component import getUtility, getMultiAdapter
 from zope.traversing.browser import absoluteURL
 
+from silva.core.interfaces import IFeedEntry, IVersionManager
+
+from .interfaces import IDocumentContent, IDocumentDetails
 
 class DocumentFeedEntry(grok.MultiAdapter):
-    grok.adapts(IDocument)
+    grok.adapts(IDocumentContent)
     grok.provides(IFeedEntry)
 
     def __init__(self, context, request):

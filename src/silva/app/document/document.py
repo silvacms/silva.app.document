@@ -16,8 +16,6 @@ from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 from zope.publisher.browser import BrowserView
 from zope.traversing.browser import absoluteURL
 
-from silva.app.document.interfaces import IDocument, IDocumentVersion
-from silva.app.document.interfaces import IDocumentDetails
 from silva.core import conf as silvaconf
 from silva.core.smi.content import IEditScreen
 from silva.core.conf.interfaces import ITitledContent
@@ -34,29 +32,47 @@ from silva.ui.rest.base import Screen, PageREST
 from silva.ui.rest.container import ListingPreview
 from zeam.form import silva as silvaforms
 
+from .interfaces import IDocumentContent, IDocumentContentVersion
+from .interfaces import IDocument, IDocumentVersion
+from .interfaces import IDocumentDetails
 
-# Version class for the content
-class DocumentVersion(Version):
+
+class DocumentContentVersion(Version):
     """Version of a document object.
     """
-    meta_type = 'Silva Document Version'
-    grok.implements(IDocumentVersion)
+    grok.baseclass()
+    grok.implements(IDocumentContentVersion)
 
     def __init__(self, *args):
-        super(DocumentVersion, self).__init__(*args)
+        super(DocumentContentVersion, self).__init__(*args)
         self.body = Text("body", u'<p></p>')
 
     def fulltext(self):
         return [self.get_title(), unicode(self.body)]
 
 
-# Content class
-class Document(VersionedContent):
+# Version class for the content
+class DocumentVersion(DocumentContentVersion):
+    """Version of a document object.
+    """
+    grok.implements(IDocumentVersion)
+    meta_type = 'Silva Document Version'
+
+
+class DocumentContent(VersionedContent):
     """A new style Document.
     """
+    grok.implements(IDocumentContent)
+    silvaconf.version_class(DocumentContentVersion)
+
+
+# Content class
+class Document(DocumentContent):
+    """A new style Document.
+    """
+    grok.implements(IDocument)
     meta_type = 'Silva Document'
 
-    grok.implements(IDocument)
     silvaconf.version_class(DocumentVersion)
     silvaconf.priority(-6)
     silvaconf.icon('document.png')
@@ -74,7 +90,7 @@ class DocumentAddForm(silvaforms.SMIAddForm):
 
 # Edit view
 class DocumentEdit(PageREST):
-    grok.adapts(Screen, IDocument)
+    grok.adapts(Screen, IDocumentContent)
     grok.name('content')
     grok.implements(IEditScreen)
     grok.require('silva.ReadSilvaContent')
@@ -99,7 +115,7 @@ class DocumentEdit(PageREST):
 class DocumentPublicView(silvaviews.View):
     """ Public view for Document
     """
-    grok.context(IDocument)
+    grok.context(IDocumentContent)
 
     def render(self):
         if self.content is not None:
@@ -135,7 +151,7 @@ class DocumentDetails(BrowserView):
 
 
 class DocumentListingPreview(ListingPreview):
-    grok.context(IDocument)
+    grok.context(IDocumentContent)
 
     def preview(self):
         previewable = self.context.get_previewable()
@@ -146,6 +162,7 @@ class DocumentListingPreview(ListingPreview):
 #Indexes
 class DocumentIndexEntries(grok.Adapter):
     grok.implements(IIndexEntries)
+    grok.context(IDocumentContent)
 
     def get_title(self):
         return self.context.get_title()
@@ -159,7 +176,7 @@ class DocumentIndexEntries(grok.Adapter):
             ITextIndexEntries(version.body).entries)
 
 
-@grok.subscribe(IDocument, IObjectCreatedEvent)
+@grok.subscribe(IDocumentContent, IObjectCreatedEvent)
 def set_title_of_new_document(content, event):
     """If a document is added, it will contain by default its title.
     """
