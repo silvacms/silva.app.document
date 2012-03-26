@@ -62,6 +62,7 @@ class DocumentVersion(DocumentContentVersion):
 class DocumentContent(VersionedContent):
     """A new style Document.
     """
+    grok.baseclass()
     grok.implements(IDocumentContent)
     silvaconf.version_class(DocumentContentVersion)
 
