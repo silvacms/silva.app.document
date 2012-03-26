@@ -176,7 +176,7 @@ class DocumentIndexEntries(grok.Adapter):
             ITextIndexEntries(version.body).entries)
 
 
-@grok.subscribe(IDocumentContent, IObjectCreatedEvent)
+@grok.subscribe(IDocument, IObjectCreatedEvent)
 def set_title_of_new_document(content, event):
     """If a document is added, it will contain by default its title.
     """
