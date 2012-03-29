@@ -1,11 +1,12 @@
 
 from silva.core import interfaces
+from Products.SilvaExternalSources.interfaces import ISourceEditableVersion
 from zope import  schema
 from zope.publisher.interfaces.browser import IBrowserView
 
 
 class IDocumentContent(interfaces.IVersionedContent):
-    """A new style Document.
+    """A new style Document
 
     You should use this as base content if you want to extend the
     document type.
@@ -13,12 +14,12 @@ class IDocumentContent(interfaces.IVersionedContent):
 
 
 class IDocument(IDocumentContent):
-    """A Document.
+    """A Document
     """
 
 
-class IDocumentContentVersion(interfaces.IVersion):
-    """A new style Document version.
+class IDocumentContentVersion(ISourceEditableVersion):
+    """A new style Document version
 
     You should use this as base version if you want to extend the
     document.
@@ -30,7 +31,7 @@ class IDocumentContentVersion(interfaces.IVersion):
 
 
 class IDocumentVersion(IDocumentContentVersion):
-    """Document version.
+    """Document version
     """
 
 
