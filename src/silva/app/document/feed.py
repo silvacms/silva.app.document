@@ -12,6 +12,7 @@ from silva.core.interfaces import IFeedEntry, IVersionManager
 
 from .interfaces import IDocumentContent, IDocumentDetails
 
+
 class DocumentFeedEntry(grok.MultiAdapter):
     grok.adapts(IDocumentContent)
     grok.provides(IFeedEntry)

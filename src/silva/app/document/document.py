@@ -172,9 +172,7 @@ class DocumentIndexEntries(grok.Adapter):
         version = self.context.get_viewable()
         if version is None:
             return []
-        return map(
-            lambda e: (e.anchor, e.title),
-            ITextIndexEntries(version.body).entries)
+        return ITextIndexEntries(version.body).entries
 
 
 @grok.subscribe(IDocument, IObjectCreatedEvent)
