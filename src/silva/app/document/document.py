@@ -105,7 +105,8 @@ class DocumentEdit(PageREST):
 
                 return {"ifaces": ["editor"],
                         "name": "body",
-                        "text": text}
+                        "text": text,
+                        "configuration": self.context.meta_type}
 
         url = getMultiAdapter((self.context, self.request), ISilvaURL).preview()
         return {"ifaces": ["preview"],

@@ -10,7 +10,7 @@ from silva.core.conf.installer import DefaultInstaller
 from silva.core.editor.interfaces import ICKEditorService
 from silva.core.interfaces import IContainerPolicy, IPublicationWorkflow
 from silva.core.interfaces.events import IInstalledExtensionEvent
-from zope.component import queryUtility
+from zope.component import queryUtility, getUtility
 from zope.interface import Interface
 
 
@@ -41,6 +41,10 @@ class DocumentInstaller(DefaultInstaller):
         if queryUtility(ICKEditorService) is None:
             factory = root.manage_addProduct['silva.core.editor']
             factory.manage_addCKEditorService()
+
+        declare = getUtility(ICKEditorService).declare_configuration
+        declare('Silva Document')
+
         root.service_containerpolicy.register(
             'Silva Document', DocumentPolicy, -1)
 
