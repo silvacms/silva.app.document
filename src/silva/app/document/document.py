@@ -26,7 +26,7 @@ from silva.core.editor.transform.interfaces import IInputEditorFilter
 from silva.core.interfaces.adapters import IIndexEntries
 from silva.core.references.interfaces import IReferenceService
 from silva.core.views import views as silvaviews
-from silva.core.views.interfaces import ISilvaURL
+from silva.core.views.interfaces import IContentURL
 from silva.translations import translate as _
 from silva.ui.rest.base import Screen, PageREST
 from silva.ui.rest.container import ListingPreview
@@ -108,7 +108,9 @@ class DocumentEdit(PageREST):
                         "text": text,
                         "configuration": self.context.meta_type}
 
-        url = getMultiAdapter((self.context, self.request), ISilvaURL).preview()
+        url = getMultiAdapter(
+            (self.context, self.request),
+            IContentURL).preview()
         return {"ifaces": ["preview"],
                 "html_url": url}
 
