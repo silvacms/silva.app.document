@@ -13,6 +13,7 @@ from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.app.document.testing import FunctionalLayer
 from silva.core.editor.testing import save_editor_text
 from silva.core.services.interfaces import ICatalogService
+from Products.Silva.testing import CatalogTransaction
 
 HTML_CATALOG = """
 <div>
@@ -21,6 +22,11 @@ HTML_CATALOG = """
 </div>
 """
 
+def search(**query):
+    catalog = getUtility(ICatalogService)
+    return map(lambda b: b.getPath(), catalog(**query))
+
+
 class DocumentTestCase(unittest.TestCase):
     layer = FunctionalLayer
 
@@ -28,7 +34,21 @@ class DocumentTestCase(unittest.TestCase):
         self.root = self.layer.get_application()
         self.layer.login('editor')
 
+    def test_install(self):
+        """Verify that an index is created when the extension is
+        installed.
+        """
+        index = self.root._getOb('index', None)
+        self.assertNotEqual(index, None)
+        self.assertTrue(verifyObject(IDocument, index))
+        self.assertNotEqual(index.get_viewable(), None)
+        self.assertEqual(index.get_editable(), None)
+        version = index.get_viewable()
+        self.assertTrue(verifyObject(IDocumentVersion, version))
+
     def test_document(self):
+        """Test document factory.
+        """
         factory = self.root.manage_addProduct['silva.app.document']
         factory.manage_addDocument('document', 'Test Document')
 
@@ -45,7 +65,7 @@ class DocumentTestCase(unittest.TestCase):
         self.assertNotEqual(document.get_creation_datetime(), None)
         self.assertNotEqual(document.get_modification_datetime(), None)
 
-    def test_cataloging(self):
+    def test_catalog(self):
         """Test that the content of the document is in the catalog.
         """
         factory = self.root.manage_addProduct['silva.app.document']
@@ -54,19 +74,35 @@ class DocumentTestCase(unittest.TestCase):
         version = self.root.document.get_editable()
         save_editor_text(version.body, HTML_CATALOG, content=version)
 
-        catalog = getUtility(ICatalogService)
-
         # Test appear in the title.
-        results = list(catalog(fulltext='Test'))
-        self.assertEqual(len(results), 1)
-        result = results[0].getObject()
-        self.assertEqual(result, self.root.document.get_editable())
+        self.assertItemsEqual(
+            search(fulltext='Test'),
+            ['/root/document/0'])
 
         # Catalog appear in the body text.
-        results = list(catalog(fulltext='catalog'))
-        self.assertEqual(len(results), 1)
-        result = results[0].getObject()
-        self.assertEqual(result, self.root.document.get_editable())
+        self.assertItemsEqual(
+            search(fulltext='catalog'),
+            ['/root/document/0'])
+
+    def test_catalog_transaction(self):
+        """Test that the content of the document is in the catalog.
+        """
+        with CatalogTransaction():
+            factory = self.root.manage_addProduct['silva.app.document']
+            factory.manage_addDocument('document', 'Test Document')
+
+            version = self.root.document.get_editable()
+            save_editor_text(version.body, HTML_CATALOG, content=version)
+
+        # Test appear in the title.
+        self.assertItemsEqual(
+            search(fulltext='Test'),
+            ['/root/document/0'])
+
+        # Catalog appear in the body text.
+        self.assertItemsEqual(
+            search(fulltext='catalog'),
+            ['/root/document/0'])
 
     def test_indexes(self):
         """Test indexes.
