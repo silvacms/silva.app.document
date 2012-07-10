@@ -176,6 +176,11 @@
             <silva-extra:subject>
             </silva-extra:subject>
           </set>
+          <set xmlns:silvasettings="http://infrae.com/namespace/metadata/silva-settings" id="silva-settings">
+            <silvasettings:hide_from_tocs>
+              do not hide
+            </silvasettings:hide_from_tocs>
+          </set>
         </metadata>
         <asset id="1">
         </asset>
