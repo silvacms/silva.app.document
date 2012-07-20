@@ -15,6 +15,7 @@ from zope.lifecycleevent.interfaces import IObjectCopiedEvent
 from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 from zope.publisher.browser import BrowserView
 from zope.traversing.browser import absoluteURL
+from zope.publisher.browser import TestRequest
 
 from silva.core import conf as silvaconf
 from silva.core.smi.content import IEditScreen
@@ -48,7 +49,7 @@ class DocumentContentVersion(Version):
         self.body = Text("body", u'<p></p>')
 
     def fulltext(self):
-        return [self.get_title(), self.body.fulltext()]
+        return [self.get_title(), self.body.fulltext(self, TestRequest())]
 
 
 # Version class for the content
