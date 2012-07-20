@@ -48,7 +48,7 @@ class DocumentContentVersion(Version):
         self.body = Text("body", u'<p></p>')
 
     def fulltext(self):
-        return [self.get_title(), unicode(self.body)]
+        return [self.get_title(), self.body.fulltext()]
 
 
 # Version class for the content
