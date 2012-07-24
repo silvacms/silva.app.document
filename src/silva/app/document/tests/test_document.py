@@ -7,13 +7,16 @@ import unittest
 
 
 from zope.interface.verify import verifyObject
-from zope.component import getUtility
+from zope.component import getUtility, queryAdapter
 
 from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.app.document.testing import FunctionalLayer
 from silva.core.editor.testing import save_editor_text
+from silva.core.interfaces import IIndexEntries
+from silva.core.interfaces import IPublicationWorkflow
 from silva.core.services.interfaces import ICatalogService
-from Products.Silva.testing import CatalogTransaction
+
+from Products.Silva.testing import CatalogTransaction, TestRequest
 
 HTML_CATALOG = """
 <div>
@@ -60,7 +63,7 @@ class DocumentTestCase(unittest.TestCase):
 
         version = document.get_editable()
         self.assertTrue(verifyObject(IDocumentVersion, version))
-        self.assertEqual(unicode(version.body), '<h1>Test Document</h1>')
+        self.assertEqual(unicode(version.body), '<p></p>')
 
         self.assertNotEqual(document.get_creation_datetime(), None)
         self.assertNotEqual(document.get_modification_datetime(), None)
@@ -105,10 +108,32 @@ class DocumentTestCase(unittest.TestCase):
             ['/root/document/0'])
 
     def test_indexes(self):
-        """Test indexes.
+        """Test Indexer indexes.
         """
-        # Editable, published
-        assert False, 'TBD'
+        factory = self.root.manage_addProduct['silva.app.document']
+        factory.manage_addDocument('document', 'Test Document')
+        version = self.root.document.get_editable()
+        version.body.save(version, TestRequest(), """
+<p>
+  <a class="anchor" name="first" title="First anchor">First anchor</a>
+  Some text.
+  <a class="anchor" name="second" title="Second anchor">First anchor</a>
+</p>
+""")
+
+        # There are no entries by default, and not published.
+        indexes = queryAdapter(self.root.document, IIndexEntries)
+        self.assertTrue(verifyObject(IIndexEntries, indexes))
+        self.assertEqual(indexes.get_title(), '')
+        self.assertEqual(indexes.get_entries(), [])
+
+        # Published, we see the title and the entries
+        IPublicationWorkflow(self.root.document).publish()
+        indexes = queryAdapter(self.root.document, IIndexEntries)
+        self.assertTrue(verifyObject(IIndexEntries, indexes))
+        self.assertEqual(indexes.get_title(), 'Test Document')
+        self.assertEqual(indexes.get_entries(), [('first', 'First anchor'),
+                                                 ('second', 'Second anchor')])
 
     def test_details(self):
         """Test details (intro, thumbnail).

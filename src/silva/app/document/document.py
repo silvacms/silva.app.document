@@ -11,8 +11,6 @@ from AccessControl.security import checkPermission
 
 from five import grok
 from zope.component import getMultiAdapter, getUtility
-from zope.lifecycleevent.interfaces import IObjectCopiedEvent
-from zope.lifecycleevent.interfaces import IObjectCreatedEvent
 from zope.publisher.browser import BrowserView
 from zope.traversing.browser import absoluteURL
 from zope.publisher.browser import TestRequest
@@ -28,7 +26,6 @@ from silva.core.interfaces.adapters import IIndexEntries
 from silva.core.references.interfaces import IReferenceService
 from silva.core.views import views as silvaviews
 from silva.core.views.interfaces import IContentURL
-from silva.translations import translate as _
 from silva.ui.rest.base import Screen, PageREST
 from silva.ui.rest.container import ListingPreview
 from zeam.form import silva as silvaforms
@@ -122,11 +119,11 @@ class DocumentPublicView(silvaviews.View):
     """
     grok.context(IDocumentContent)
 
-    def render(self):
+    def update(self):
+        self.text = None
         if self.content is not None:
-            return self.content.body.render(
+            self.text = self.content.body.render(
                 self.content, self.request, IDisplayFilter)
-        return _('This content is not available.')
 
 
 class DocumentDetails(BrowserView):
@@ -177,17 +174,4 @@ class DocumentIndexEntries(grok.Adapter):
         if version is None:
             return []
         return ITextIndexEntries(version.body).entries
-
-
-@grok.subscribe(IDocument, IObjectCreatedEvent)
-def set_title_of_new_document(content, event):
-    """If a document is added, it will contain by default its title.
-    """
-    if IObjectCopiedEvent.providedBy(event):
-        # Don't override a copied document !
-        return
-    version = content.get_editable()
-    if version is not None:
-        version.body.save_raw_text(u'<h1>' + version.get_title() + u'</h1>')
-
 

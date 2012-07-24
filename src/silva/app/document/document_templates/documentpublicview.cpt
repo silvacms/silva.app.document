@@ -1,0 +1,4 @@
+<tal:document>
+  <h1 tal:content="content.get_title_or_id()">Title</h1>
+  <tal:text tal:replace="structure view.text" />
+</tal:document>
