@@ -8,15 +8,19 @@ import unittest
 
 from zope.interface.verify import verifyObject
 from zope.component import getUtility, queryAdapter
+from zope.component import queryMultiAdapter
 
 from silva.app.document.interfaces import IDocument, IDocumentVersion
+from silva.app.document.interfaces import IDocumentDetails
 from silva.app.document.testing import FunctionalLayer
 from silva.core.editor.testing import save_editor_text
 from silva.core.interfaces import IIndexEntries
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.services.interfaces import ICatalogService
+from silva.core.references.reference import get_content_id
 
-from Products.Silva.testing import CatalogTransaction, TestRequest
+from Products.Silva.testing import CatalogTransaction, TestRequest, TestCase
+from Products.Silva.tests.helpers import open_test_file
 
 HTML_CATALOG = """
 <div>
@@ -30,7 +34,7 @@ def search(**query):
     return map(lambda b: b.getPath(), catalog(**query))
 
 
-class DocumentTestCase(unittest.TestCase):
+class DocumentTestCase(TestCase):
     layer = FunctionalLayer
 
     def setUp(self):
@@ -135,10 +139,82 @@ class DocumentTestCase(unittest.TestCase):
         self.assertEqual(indexes.get_entries(), [('first', 'First anchor'),
                                                  ('second', 'Second anchor')])
 
-    def test_details(self):
-        """Test details (intro, thumbnail).
+    def test_details_introduction(self):
+        """Test details, retrieve the introduction, and no thumbnail.
         """
-        assert False, 'TBD'
+        factory = self.root.manage_addProduct['silva.app.document']
+        factory.manage_addDocument('document', 'Test Document')
+        version = self.root.document.get_editable()
+        version.body.save(version, TestRequest(), """
+<h3>Sub title</h3>
+<p>This is the first story.</p>
+<p>And that is the second story of the day.</p>
+""")
+
+        # Query the adapter with an interface (API)
+        details = queryMultiAdapter((version, TestRequest()), IDocumentDetails)
+        self.assertTrue(verifyObject(IDocumentDetails, details))
+        self.assertXMLEqual(
+            details.get_introduction(),
+            "<p>This is the first story.</p>")
+        self.assertEqual(
+            details.get_thumbnail(),
+            None)
+
+        # Query the adapter with a view (API)
+        details = queryMultiAdapter((version, TestRequest()), name='details')
+        self.assertTrue(verifyObject(IDocumentDetails, details))
+        self.assertXMLEqual(
+            details.get_introduction(),
+            "<p>This is the first story.</p>")
+        self.assertEqual(
+            details.get_thumbnail(),
+            None)
+
+    def test_details_thumbnail(self):
+        """Test document details with a thumbnail and no introduction.
+        """
+        factory = self.root.manage_addProduct['silva.app.document']
+        factory.manage_addDocument('document', 'Test Document')
+        factory = self.root.manage_addProduct['Silva']
+        with open_test_file('content-listing.png', globals()) as image:
+            factory.manage_addImage('listing', 'Content Listing', image)
+
+        version = self.root.document.get_editable()
+        version.body.save(version, TestRequest(), """
+<h3>Sub title</h3>
+<ul>
+   <li>This is a list.</li>
+   <li>This is an item actually.</li>
+</ul>
+<div class="image">
+  <img alt="logo" data-silva-reference="new" data-silva-target="%s" />
+</div>
+""" % get_content_id(self.root.listing))
+
+        # Query the adapter with an interface (API)
+        details = queryMultiAdapter((version, TestRequest()), IDocumentDetails)
+        self.assertTrue(verifyObject(IDocumentDetails, details))
+        self.assertXMLEqual(
+            details.get_introduction(),
+            "")
+        self.assertXMLEqual(
+            details.get_thumbnail(),
+            """
+<img src="http://localhost/root/listing?thumbnail" class="thumbnail" />
+""")
+
+        # Query the adapter with a view (API)
+        details = queryMultiAdapter((version, TestRequest()), name='details')
+        self.assertTrue(verifyObject(IDocumentDetails, details))
+        self.assertXMLEqual(
+            details.get_introduction(),
+            "")
+        self.assertXMLEqual(
+            details.get_thumbnail(),
+            """
+<img src="http://localhost/root/listing?thumbnail" class="thumbnail" />
+""")
 
 
 def test_suite():
