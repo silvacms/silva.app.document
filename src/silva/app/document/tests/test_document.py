@@ -72,6 +72,26 @@ class DocumentTestCase(TestCase):
         self.assertNotEqual(document.get_creation_datetime(), None)
         self.assertNotEqual(document.get_modification_datetime(), None)
 
+    def test_fulltext(self):
+        """Test document fulltext.
+        """
+        factory = self.root.manage_addProduct['silva.app.document']
+        factory.manage_addDocument('document', 'Test Document')
+        return
+        version = self.root.document.get_editable()
+        self.assertItemsEqual(
+            version.fulltext(),
+            ['Test document'])
+        version.body.save(version, TestRequest(), """
+<p>
+  This is some text, with <a href="#">link to the internet</a>.
+</p>
+""")
+        self.assertItemsEqual(
+            version.fulltext(),
+            ['This is some text, with', 'link to the internet',
+             '.', 'Test document'])
+
     def test_catalog(self):
         """Test that the content of the document is in the catalog.
         """

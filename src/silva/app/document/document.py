@@ -46,7 +46,9 @@ class DocumentContentVersion(Version):
         self.body = Text("body", u'<p></p>')
 
     def fulltext(self):
-        return [self.get_title(), self.body.fulltext(self, TestRequest())]
+        fulltext = self.body.fulltext(self, TestRequest())
+        fulltext.append(self.get_title())
+        return fulltext
 
 
 # Version class for the content
