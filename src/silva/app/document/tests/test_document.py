@@ -14,11 +14,13 @@ from silva.app.document.interfaces import IDocument, IDocumentVersion
 from silva.app.document.interfaces import IDocumentDetails
 from silva.app.document.testing import FunctionalLayer
 from silva.core.editor.testing import save_editor_text
+from silva.core.interfaces import IFeedEntry, IFeedEntryProvider
 from silva.core.interfaces import IIndexEntries
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.services.interfaces import ICatalogService
 from silva.core.references.reference import get_content_id
 
+from Products.SilvaMetadata.interfaces import IMetadataService
 from Products.Silva.testing import CatalogTransaction, TestRequest, TestCase
 from Products.Silva.tests.helpers import open_test_file
 
@@ -158,6 +160,50 @@ class DocumentTestCase(TestCase):
         self.assertEqual(indexes.get_title(), 'Test Document')
         self.assertEqual(indexes.get_entries(), [('first', 'First anchor'),
                                                  ('second', 'Second anchor')])
+
+    def test_feeds(self):
+        """When you have published document, you can have feeds out of them.
+        """
+        factory = self.root.manage_addProduct['silva.app.document']
+        factory.manage_addDocument('document', 'Test Document')
+        factory.manage_addDocument('work', 'Work in progress')
+        version = self.root.document.get_editable()
+        version.body.save(version, TestRequest(), """
+<h3>Sub title</h3>
+<p>This is the first story.</p>
+<p>And that is the second story of the day.</p>
+""")
+        binding = getUtility(IMetadataService).getMetadata(version)
+        binding.setValues('silva-extra', {
+                'content_description': 'Test content',
+                'keywords': 'test'})
+        IPublicationWorkflow(self.root.document).publish()
+
+        feed = queryMultiAdapter(
+            (self.root, TestRequest()),
+            IFeedEntryProvider)
+        self.assertTrue(verifyObject(IFeedEntryProvider, feed))
+        entries = list(feed.entries())
+        self.assertEqual(len(entries), 1)
+        self.assertEqual(entries[0].id(), 'http://localhost/root/document')
+
+        entry = queryMultiAdapter(
+            (self.root.document, TestRequest()),
+            IFeedEntry)
+        self.assertTrue(verifyObject(IFeedEntry, entry))
+        self.assertEqual(entry.id(), 'http://localhost/root/document')
+        self.assertEqual(entry.title(), 'Test Document')
+        self.assertEqual(entry.url(), 'http://localhost/root/document')
+        self.assertEqual(entry.authors(), ['editor'])
+        self.assertEqual(entry.description(), 'Test content')
+        self.assertEqual(entry.keywords(), ['test'])
+        self.assertXMLEqual(
+            entry.html_description(),
+            "<p>This is the first story.</p>")
+
+        self.assertIs(
+            queryMultiAdapter((self.root.work, TestRequest), IFeedEntry),
+            None)
 
     def test_details_introduction(self):
         """Test details, retrieve the introduction, and no thumbnail.
