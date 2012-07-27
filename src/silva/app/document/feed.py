@@ -61,7 +61,10 @@ class DocumentFeedEntry(grok.MultiAdapter):
         return self.get_metadata(self.context, 'silva-extra', 'subject')
 
     def keywords(self):
-        return [self.get_metadata(self.context, 'silva-extra', 'keywords')]
+        keywords = self.get_metadata(self.context, 'silva-extra', 'keywords')
+        if keywords:
+            return [keywords]
+        return []
 
 
 @grok.adapter(IDocumentContent, IHTTPRequest)
