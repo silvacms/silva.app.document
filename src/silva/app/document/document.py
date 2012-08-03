@@ -151,7 +151,7 @@ class DocumentDetails(BrowserView):
 
     def get_introduction(self, length=128):
         return self.context.body.render_introduction(
-            self.context, self.request, max_length=128)
+            self.context, self.request, max_length=length)
 
 
 class DocumentListingPreview(ListingPreview):
