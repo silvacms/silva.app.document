@@ -1,4 +1,6 @@
 <tal:document tal:condition="content is not None">
-  <h1 tal:content="content.get_title()">Title</h1>
+  <h1 tal:define="title content.get_title()"
+      tal:content="title"
+      tal:condition="title">Title</h1>
   <tal:text tal:replace="structure view.text" />
 </tal:document>
