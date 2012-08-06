@@ -40,8 +40,6 @@ class SaveTitle(TransformationFilter):
 
     def __call__(self, tree):
         nodes = tree.xpath('//h1[1]')
-        if not len(nodes):
-            nodes = tree.xpath('//h2[1]')
         if len(nodes):
             node = nodes[0]
             title = node.xpath('normalize-space(.)')

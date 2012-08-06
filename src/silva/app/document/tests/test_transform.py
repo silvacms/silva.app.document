@@ -123,6 +123,25 @@ class TitleTransformerTestCase(TestCase):
             "<h1>Two title</h1><p>Hello world!</p>")
         self.assertEqual(version.get_title(), 'One title')
 
+    def test_save_editor_sub_title(self):
+        """Transform a piece of text to save from the editor. The text
+        has no title, and only a sub title. The document title is not
+        modified, and the sub-title is keept in the text.
+        """
+        version = self.root.document.get_editable()
+        self.assertEqual(version.get_title(), 'Document title')
+        factory = getMultiAdapter((version, TestRequest()),
+            ITransformerFactory)
+        transformer = factory(
+            'body',
+            version.body,
+            "<h2>World domination</h2><p>Hello world!</p>",
+            ISaveEditorFilter)
+        self.assertXMLEqual(
+            unicode(transformer),
+            "<h2>World domination</h2><p>Hello world!</p>")
+        self.assertEqual(version.get_title(), 'Document title')
+
 
 def test_suite():
     suite = unittest.TestSuite()
