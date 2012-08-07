@@ -57,7 +57,7 @@ def add_default_document(extension, event):
         factory.manage_addDocument('index', 'Welcome to Silva!')
         document = root.index
         version = document.get_editable()
-        version.body.save_raw_text('<div><h1>Welcome to Silva!</h1><p>Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <a href="edit">click this link</a>).</p></div>')
+        version.body.save_raw_text('<div><p>Welcome to Silva! This is the public view. To actually see something interesting, try adding \'/edit\' to your url (if you\'re not already editing, you can <a href="edit">click this link</a>).</p></div>')
         IPublicationWorkflow(document).publish()
 
 
