@@ -47,3 +47,7 @@ class IDocumentDetails(IBrowserView):
     def get_introduction(length=128):
         """Return a piece of HTML with part of the first paragraph.
         """
+
+    def get_text():
+        """Return the text (only) of the document.
+        """

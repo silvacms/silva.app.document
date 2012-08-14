@@ -223,6 +223,13 @@ class DocumentTestCase(TestCase):
         self.assertXMLEqual(
             details.get_introduction(),
             "<p>This is the first story.</p>")
+        self.assertXMLEqual(
+            details.get_text(),
+            """
+<h3>Sub title</h3>
+<p>This is the first story.</p>
+<p>And that is the second story of the day.</p>
+""")
         self.assertEqual(
             details.get_thumbnail(),
             None)
@@ -233,6 +240,13 @@ class DocumentTestCase(TestCase):
         self.assertXMLEqual(
             details.get_introduction(),
             "<p>This is the first story.</p>")
+        self.assertXMLEqual(
+            details.get_text(),
+            """
+<h3>Sub title</h3>
+<p>This is the first story.</p>
+<p>And that is the second story of the day.</p>
+""")
         self.assertEqual(
             details.get_thumbnail(),
             None)
@@ -265,6 +279,18 @@ class DocumentTestCase(TestCase):
             details.get_introduction(),
             "")
         self.assertXMLEqual(
+            details.get_text(),
+"""
+<h3>Sub title</h3>
+<ul>
+   <li>This is a list.</li>
+   <li>This is an item actually.</li>
+</ul>
+<div class="image">
+  <img alt="logo" src="http://localhost/root/listing" />
+</div>
+""")
+        self.assertXMLEqual(
             details.get_thumbnail(),
             """
 <img src="http://localhost/root/listing?thumbnail" class="thumbnail" />
@@ -276,6 +302,18 @@ class DocumentTestCase(TestCase):
         self.assertXMLEqual(
             details.get_introduction(),
             "")
+        self.assertXMLEqual(
+            details.get_text(),
+"""
+<h3>Sub title</h3>
+<ul>
+   <li>This is a list.</li>
+   <li>This is an item actually.</li>
+</ul>
+<div class="image">
+  <img alt="logo" src="http://localhost/root/listing" />
+</div>
+""")
         self.assertXMLEqual(
             details.get_thumbnail(),
             """

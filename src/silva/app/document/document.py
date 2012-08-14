@@ -135,8 +135,6 @@ class DocumentDetails(BrowserView):
     grok.implements(IDocumentDetails)
     DEFAULT_FORMAT = u"""<img src="%s?thumbnail" class="thumbnail" />"""
 
-    # XXX this code may be moved to some adapter, so it can be used
-    # to get the thumbnail object without a request
     def get_thumbnail(self, format=DEFAULT_FORMAT):
         tree = lxml.html.fromstring(unicode(self.context.body))
         results = tree.xpath("//img[@reference][1]")
@@ -152,6 +150,9 @@ class DocumentDetails(BrowserView):
     def get_introduction(self, length=128):
         return self.context.body.render_introduction(
             self.context, self.request, max_length=length)
+
+    def get_text(self):
+        return self.context.body.render(self.context, self.request)
 
 
 class DocumentListingPreview(ListingPreview):
