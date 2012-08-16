@@ -148,7 +148,7 @@ class DocumentDetails(BrowserView):
         return None
 
     def get_introduction(self, length=128):
-        return self.context.body.render_introduction(
+        return self.context.body.introduction(
             self.context, self.request, max_length=length)
 
     def get_text(self):
