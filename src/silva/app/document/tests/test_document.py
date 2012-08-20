@@ -286,7 +286,8 @@ class DocumentTestCase(TestCase):
    <li>This is an item actually.</li>
 </ul>
 <div class="image">
-  <img alt="logo" src="http://localhost/root/listing" />
+  <img alt="logo" height="426" width="680"
+       src="http://localhost/root/listing" />
 </div>
 """)
         self.assertXMLEqual(
@@ -310,7 +311,8 @@ class DocumentTestCase(TestCase):
    <li>This is an item actually.</li>
 </ul>
 <div class="image">
-  <img alt="logo" src="http://localhost/root/listing" />
+  <img alt="logo" height="426" width="680"
+       src="http://localhost/root/listing" />
 </div>
 """)
         self.assertXMLEqual(
