@@ -17,12 +17,11 @@ from silva.core.editor.testing import save_editor_text
 from silva.core.interfaces import IFeedEntry, IFeedEntryProvider
 from silva.core.interfaces import IIndexEntries
 from silva.core.interfaces import IPublicationWorkflow
-from silva.core.services.interfaces import ICatalogService
 from silva.core.references.reference import get_content_id
+from silva.core.services.interfaces import ICatalogService
 
 from Products.SilvaMetadata.interfaces import IMetadataService
 from Products.Silva.testing import CatalogTransaction, TestRequest, TestCase
-from Products.Silva.tests.helpers import open_test_file
 
 HTML_CATALOG = """
 <div>
@@ -257,7 +256,7 @@ class DocumentTestCase(TestCase):
         factory = self.root.manage_addProduct['silva.app.document']
         factory.manage_addDocument('document', 'Test Document')
         factory = self.root.manage_addProduct['Silva']
-        with open_test_file('content-listing.png', globals()) as image:
+        with self.layer.open_fixture('content-listing.png') as image:
             factory.manage_addImage('listing', 'Content Listing', image)
 
         version = self.root.document.get_editable()

@@ -6,7 +6,6 @@
 import unittest
 
 from Products.Silva.silvaxml.xmlexport import exportToString
-from Products.Silva.tests.helpers import open_test_file
 from Products.Silva.tests.test_xml_export import SilvaXMLTestCase
 from silva.app.document.testing import FunctionalLayer
 from silva.core.editor.testing import save_editor_text
@@ -54,8 +53,8 @@ class DocumentExportTestCase(SilvaXMLTestCase):
         factory = self.root.folder.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('other', 'Other')
 
-        with open_test_file('content-listing.png', globals()) as image_file:
-            factory.manage_addImage('image', 'Image', image_file)
+        with self.layer.open_fixture('content-listing.png') as image:
+            factory.manage_addImage('image', 'Image', image)
 
         version = self.root.folder.example.get_editable()
         save_editor_text(
@@ -76,8 +75,8 @@ class DocumentExportTestCase(SilvaXMLTestCase):
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('other', 'Other')
 
-        with open_test_file('content-listing.png', globals()) as image_file:
-            factory.manage_addImage('image', 'Image', image_file)
+        with self.layer.open_fixture('content-listing.png') as image:
+            factory.manage_addImage('image', 'Image', image)
 
         version = self.root.folder.example.get_editable()
         save_editor_text(
