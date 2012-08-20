@@ -293,7 +293,8 @@ class DocumentTestCase(TestCase):
         self.assertXMLEqual(
             details.get_thumbnail(),
             """
-<img src="http://localhost/root/listing?thumbnail" class="thumbnail" />
+<img src="http://localhost/root/listing?thumbnail"
+     width="120" height="75" class="thumbnail" />
 """)
 
         # Query the adapter with a view (API)

@@ -22,7 +22,7 @@ from silva.core.editor.interfaces import ITextIndexEntries
 from silva.core.editor.text import Text
 from silva.core.editor.transform.interfaces import IDisplayFilter
 from silva.core.editor.transform.interfaces import IInputEditorFilter
-from silva.core.interfaces.adapters import IIndexEntries
+from silva.core.interfaces import IIndexEntries, IImage
 from silva.core.references.interfaces import IReferenceService
 from silva.core.views import views as silvaviews
 from silva.core.views.interfaces import IContentURL
@@ -133,7 +133,7 @@ class DocumentDetails(BrowserView):
     introduction for it.
     """
     grok.implements(IDocumentDetails)
-    DEFAULT_FORMAT = u"""<img src="%s?thumbnail" class="thumbnail" />"""
+    DEFAULT_FORMAT = u"""<img src="{url}?thumbnail" width="{width}" height="{height}" class="thumbnail" />"""
 
     def get_thumbnail(self, format=DEFAULT_FORMAT):
         tree = lxml.html.fromstring(unicode(self.context.body))
@@ -143,8 +143,15 @@ class DocumentDetails(BrowserView):
             reference_service = getUtility(IReferenceService)
             reference = reference_service.get_reference(
                 self.context, name=image.attrib['reference'])
-            image_content = reference.target
-            return format % absoluteURL(image_content, self.request)
+            content = reference.target
+            if IImage.providedBy(content):
+                size = content.get_dimensions(thumbnail=True)
+            else:
+                size = (0, 0)
+            return format.format(
+                url=absoluteURL(content, self.request),
+                height=size[1],
+                width=size[0])
         return None
 
     def get_introduction(self, length=128):
