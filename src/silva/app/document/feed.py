@@ -30,7 +30,8 @@ class DocumentFeedEntry(grok.MultiAdapter):
         return self.url()
 
     def title(self):
-        return self.get_metadata(self.context, 'silva-content', 'maintitle')
+        return self.get_metadata(
+            self.context, 'silva-content', 'maintitle')
 
     def html_description(self):
         if self.context is not None:
@@ -47,7 +48,7 @@ class DocumentFeedEntry(grok.MultiAdapter):
         return absoluteURL(self.context.get_silva_object(), self.request)
 
     def authors(self):
-        return [self.get_metadata(self.context, 'silva-extra', 'lastauthor')]
+        return [self.context.get_last_author_info().fullname()]
 
     def date_updated(self):
         return self.get_metadata(
@@ -58,10 +59,12 @@ class DocumentFeedEntry(grok.MultiAdapter):
         return manager.get_publication_datetime()
 
     def subject(self):
-        return self.get_metadata(self.context, 'silva-extra', 'subject')
+        return self.get_metadata(
+            self.context, 'silva-extra', 'subject')
 
     def keywords(self):
-        keywords = self.get_metadata(self.context, 'silva-extra', 'keywords')
+        keywords = self.get_metadata(
+            self.context, 'silva-extra', 'keywords')
         if keywords:
             return [keywords]
         return []
