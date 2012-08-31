@@ -140,6 +140,7 @@ class DocumentTestCase(TestCase):
         version = self.root.document.get_editable()
         version.body.save(version, TestRequest(), """
 <p>
+  <h1>Test Document</h1>
   <a class="anchor" name="first" title="First anchor">First anchor</a>
   Some text.
   <a class="anchor" name="second" title="Second anchor">First anchor</a>
@@ -168,6 +169,7 @@ class DocumentTestCase(TestCase):
         factory.manage_addDocument('work', 'Work in progress')
         version = self.root.document.get_editable()
         version.body.save(version, TestRequest(), """
+<h1>Test Document</h1>
 <h3>Sub title</h3>
 <p>This is the first story.</p>
 <p>And that is the second story of the day.</p>
@@ -211,6 +213,7 @@ class DocumentTestCase(TestCase):
         factory.manage_addDocument('document', 'Test Document')
         version = self.root.document.get_editable()
         version.body.save(version, TestRequest(), """
+<h1>Test Document</h1>
 <h3>Sub title</h3>
 <p>This is the first story.</p>
 <p>And that is the second story of the day.</p>

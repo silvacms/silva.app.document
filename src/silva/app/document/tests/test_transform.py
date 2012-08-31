@@ -90,7 +90,7 @@ class TitleTransformerTestCase(TestCase):
 
     def test_save_editor_no_title(self):
         """Transform a piece of text to save from the editor. The text
-        has no title, so the title will not be changed.
+        has no title, the title of the document is removed.
         """
         version = self.root.document.get_editable()
         self.assertEqual(version.get_title(), 'Document title')
@@ -102,7 +102,7 @@ class TitleTransformerTestCase(TestCase):
             "<p>Hello world!</p>",
             ISaveEditorFilter)
         self.assertXMLEqual(unicode(transformer), "<p>Hello world!</p>")
-        self.assertEqual(version.get_title(), 'Document title')
+        self.assertEqual(version.get_title(), u'')
 
     def test_save_editor_multiple_title(self):
         """Transform a piece of text to save from the editor. The text
@@ -125,8 +125,8 @@ class TitleTransformerTestCase(TestCase):
 
     def test_save_editor_sub_title(self):
         """Transform a piece of text to save from the editor. The text
-        has no title, and only a sub title. The document title is not
-        modified, and the sub-title is keept in the text.
+        has no title, and only a sub title. The document title is
+        removed, and the sub-title is keept in the text.
         """
         version = self.root.document.get_editable()
         self.assertEqual(version.get_title(), 'Document title')
@@ -140,7 +140,7 @@ class TitleTransformerTestCase(TestCase):
         self.assertXMLEqual(
             unicode(transformer),
             "<h2>World domination</h2><p>Hello world!</p>")
-        self.assertEqual(version.get_title(), 'Document title')
+        self.assertEqual(version.get_title(), u'')
 
 
 def test_suite():

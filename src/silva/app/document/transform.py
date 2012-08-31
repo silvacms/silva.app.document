@@ -44,4 +44,6 @@ class SaveTitle(TransformationFilter):
             node = nodes[0]
             title = node.xpath('normalize-space(.)')
             node.getparent().remove(node)
-            self.context.set_title(title)
+        else:
+            title = u''
+        self.context.set_title(title)
