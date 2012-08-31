@@ -39,6 +39,10 @@ class IDocumentDetails(IBrowserView):
     """Give access to document details.
     """
 
+    def get_title():
+        """Return the document title.
+        """
+
     def get_thumbnail(format):
         """Return a piece of HTML with the thumbnail of the first
         document image.

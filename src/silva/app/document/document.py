@@ -135,6 +135,9 @@ class DocumentDetails(BrowserView):
     grok.implements(IDocumentDetails)
     DEFAULT_FORMAT = u"""<img src="{url}?thumbnail" width="{width}" height="{height}" class="thumbnail" />"""
 
+    def get_title(self):
+        return self.context.get_title().strip()
+
     def get_thumbnail(self, format=DEFAULT_FORMAT):
         tree = lxml.html.fromstring(unicode(self.context.body))
         results = tree.xpath("//img[@reference][1]")

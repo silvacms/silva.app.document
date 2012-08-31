@@ -233,6 +233,9 @@ class DocumentTestCase(TestCase):
 <p>And that is the second story of the day.</p>
 """)
         self.assertEqual(
+            details.get_title(),
+            'Test Document')
+        self.assertEqual(
             details.get_thumbnail(),
             None)
 
@@ -249,6 +252,9 @@ class DocumentTestCase(TestCase):
 <p>This is the first story.</p>
 <p>And that is the second story of the day.</p>
 """)
+        self.assertEqual(
+            details.get_title(),
+            'Test Document')
         self.assertEqual(
             details.get_thumbnail(),
             None)
