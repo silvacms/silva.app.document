@@ -206,7 +206,7 @@ class DocumentTestCase(TestCase):
             queryMultiAdapter((self.root.work, TestRequest), IFeedEntry),
             None)
 
-    def test_details_introduction(self):
+    def test_details_document_without_image(self):
         """Test details, retrieve the introduction, and no thumbnail.
         """
         factory = self.root.manage_addProduct['silva.app.document']
@@ -259,7 +259,7 @@ class DocumentTestCase(TestCase):
             details.get_thumbnail(),
             None)
 
-    def test_details_thumbnail(self):
+    def test_details_document_with_image(self):
         """Test document details with a thumbnail and no introduction.
         """
         factory = self.root.manage_addProduct['silva.app.document']
@@ -332,6 +332,29 @@ class DocumentTestCase(TestCase):
      width="120" height="75" class="thumbnail" />
 """)
 
+    def test_details_empty_document(self):
+        """Test details on a document that doesn't have any text at all.
+        """
+        factory = self.root.manage_addProduct['silva.app.document']
+        factory.manage_addDocument('document', 'Test Document')
+        version = self.root.document.get_editable()
+        version.body.save(version, TestRequest(), "")
+        # Query the adapter with an interface (API)
+        details = queryMultiAdapter((version, TestRequest()), IDocumentDetails)
+        self.assertTrue(verifyObject(IDocumentDetails, details))
+        self.assertXMLEqual(details.get_introduction(), "")
+        self.assertXMLEqual(details.get_text(), "")
+        self.assertEqual(details.get_title(), "")
+        self.assertEqual(details.get_thumbnail(), None)
+
+        # Query the adapter with a view (API)
+        details = queryMultiAdapter((version, TestRequest()), name='details')
+        details = queryMultiAdapter((version, TestRequest()), IDocumentDetails)
+        self.assertTrue(verifyObject(IDocumentDetails, details))
+        self.assertXMLEqual(details.get_introduction(), "")
+        self.assertXMLEqual(details.get_text(), "")
+        self.assertEqual(details.get_title(), "")
+        self.assertEqual(details.get_thumbnail(), None)
 
 def test_suite():
     suite = unittest.TestSuite()

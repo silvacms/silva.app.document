@@ -139,22 +139,24 @@ class DocumentDetails(BrowserView):
         return self.context.get_title().strip()
 
     def get_thumbnail(self, format=DEFAULT_FORMAT):
-        tree = lxml.html.fromstring(unicode(self.context.body))
-        results = tree.xpath("//img[@reference][1]")
-        if results:
-            image = results[0]
-            reference_service = getUtility(IReferenceService)
-            reference = reference_service.get_reference(
-                self.context, name=image.attrib['reference'])
-            content = reference.target
-            if IImage.providedBy(content):
-                size = content.get_dimensions(thumbnail=True)
-            else:
-                size = (0, 0)
-            return format.format(
-                url=absoluteURL(content, self.request),
-                height=size[1],
-                width=size[0])
+        text = unicode(self.context.body)
+        if text:
+            tree = lxml.html.fromstring(text)
+            results = tree.xpath("//img[@reference][1]")
+            if results:
+                image = results[0]
+                reference_service = getUtility(IReferenceService)
+                reference = reference_service.get_reference(
+                    self.context, name=image.attrib['reference'])
+                content = reference.target
+                if IImage.providedBy(content):
+                    size = content.get_dimensions(thumbnail=True)
+                else:
+                    size = (0, 0)
+                return format.format(
+                    url=absoluteURL(content, self.request),
+                    height=size[1],
+                    width=size[0])
         return None
 
     def get_introduction(self, length=128):
