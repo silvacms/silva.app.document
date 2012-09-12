@@ -25,7 +25,7 @@ from silva.core.editor.transform.interfaces import IInputEditorFilter
 from silva.core.interfaces import IIndexEntries, IImage
 from silva.core.references.interfaces import IReferenceService
 from silva.core.views import views as silvaviews
-from silva.core.views.interfaces import IContentURL
+from silva.ui.interfaces import IJSView
 from silva.ui.rest.base import Screen, PageREST
 from silva.ui.rest.container import ListingPreview
 from zeam.form import silva as silvaforms
@@ -108,11 +108,9 @@ class DocumentEdit(PageREST):
                         "text": text,
                         "configuration": self.context.meta_type}
 
-        url = getMultiAdapter(
-            (self.context, self.request),
-            IContentURL).preview()
-        return {"ifaces": ["preview"],
-                "html_url": url}
+        view = getMultiAdapter(
+            (self.context, self.request), IJSView, name='content-preview')
+        return view(self)
 
 
 # Public view
