@@ -10,10 +10,12 @@ from Products.Silva.VersionedContent import VersionedContent
 from AccessControl.security import checkPermission
 
 from five import grok
+from zope import schema
 from zope.component import getMultiAdapter, getUtility
+from zope.interface import Interface
 from zope.publisher.browser import BrowserView
-from zope.traversing.browser import absoluteURL
 from zope.publisher.browser import TestRequest
+from zope.traversing.browser import absoluteURL
 
 from silva.core import conf as silvaconf
 from silva.core.smi.content import IEditScreen
@@ -40,6 +42,11 @@ class DocumentContentVersion(Version):
     """
     grok.baseclass()
     grok.implements(IDocumentContentVersion)
+
+    manage_options = (
+        {'label': 'Document',
+         'action': 'manage_document'},
+        ) + Version.manage_options
 
     def __init__(self, *args):
         super(DocumentContentVersion, self).__init__(*args)
@@ -124,6 +131,24 @@ class DocumentPublicView(silvaviews.View):
         if self.content is not None:
             self.text = self.content.body.render(
                 self.content, self.request, IDisplayFilter)
+
+
+class IManageDocumentVersion(Interface):
+    body = schema.Text(title=u"Raw HTML")
+
+
+class ManageDocumentVersion(silvaforms.ZMIForm):
+    """Manage document raw html.
+    """
+    grok.context(IDocumentContentVersion)
+    grok.name('manage_document')
+
+    label = "Raw HTML"
+    description = "You can here see the raw HTML of the document."
+    fields = silvaforms.Fields(IManageDocumentVersion)
+    mode = silvaforms.DISPLAY
+    ignoreContent = False
+    ignoreRequest = True
 
 
 class DocumentDetails(BrowserView):
