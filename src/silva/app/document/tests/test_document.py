@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2010 Infrae. All rights reserved.
+# Copyright (c) 2010-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id$
 
 import unittest
 
@@ -19,8 +18,8 @@ from silva.core.interfaces import IIndexEntries
 from silva.core.interfaces import IPublicationWorkflow
 from silva.core.references.reference import get_content_id
 from silva.core.services.interfaces import ICatalogService
+from silva.core.services.interfaces import IMetadataService
 
-from Products.SilvaMetadata.interfaces import IMetadataService
 from Products.Silva.testing import CatalogTransaction, TestRequest, TestCase
 
 HTML_CATALOG = """

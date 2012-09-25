@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2010 Infrae. All rights reserved.
+# Copyright (c) 2010-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id$
 
 from Products.Silva.silvaxml import xmlimport
 from silva.core.editor.transform.silvaxml import NS_EDITOR_URI

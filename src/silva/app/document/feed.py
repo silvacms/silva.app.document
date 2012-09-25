@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2010 Infrae. All rights reserved.
+# Copyright (c) 2010-2012 Infrae. All rights reserved.
 # See also LICENSE.txt
-# $Id$
 
-from Products.SilvaMetadata.interfaces import IMetadataService
 from five import grok
 from zope.component import getUtility, getMultiAdapter
 from zope.component import queryMultiAdapter
@@ -11,6 +9,7 @@ from zope.publisher.interfaces.http import IHTTPRequest
 from zope.traversing.browser import absoluteURL
 
 from silva.core.interfaces import IFeedEntry, IVersionManager
+from silva.core.services.interfaces import IMetadataService
 
 from .interfaces import IDocumentContent, IDocumentContentVersion
 from .interfaces import IDocumentDetails

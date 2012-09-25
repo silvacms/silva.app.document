@@ -2,12 +2,24 @@
 Changes
 =======
 
-3.0 (unreleased)
-----------------
+3.0c1 (2012/09/25)
+------------------
 
-* ...
+* Update API to Silva 3.0c1.
+
+* Support automatic edition of the title, like it was done with the
+  previous ``SilvaDocument`` extension.
+
+* Add a ZMI screen to see the document raw HTML. Improve various API.
+
+* Add a document base class that can be reused by other Silva extensions.
+
+* Fix bugs.
+
+* Improve tests.
 
 3.0b1 (2011/11/11)
 ------------------
 
 * Initial release.
+

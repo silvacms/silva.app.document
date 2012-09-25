@@ -1,7 +1,10 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2012  Infrae. All rights reserved.
+# See also LICENSE.txt
 from setuptools import setup, find_packages
 import os
 
-version = '3.0dev'
+version = '3.0c1'
 
 tests_require = [
     'Products.Silva [test]',
@@ -28,7 +31,6 @@ setup(name='silva.app.document',
       zip_safe=True,
       install_requires=[
         'Products.Silva',
-        'Products.SilvaMetadata',
         'Products.SilvaExternalSources',
         'five.grok',
         'lxml',
@@ -39,6 +41,7 @@ setup(name='silva.app.document',
         'silva.core.references',
         'silva.core.smi',
         'silva.core.views',
+        'silva.core.services',
         'silva.translations',
         'silva.ui',
         'zeam.form.silva',
