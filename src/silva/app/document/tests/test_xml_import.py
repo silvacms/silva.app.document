@@ -14,7 +14,6 @@ from silva.app.document.testing import FunctionalLayer
 from silva.core.editor.interfaces import ITextIndexEntries
 from silva.core.interfaces import IIndexer
 from silva.core.interfaces.adapters import IIndexEntries
-from silva.core.interfaces.events import IContentImported
 from silva.core.references.interfaces import IReferenceService
 
 
@@ -26,11 +25,10 @@ class DocumentImportTestCase(SilvaXMLTestCase):
         self.layer.login('editor')
 
     def test_import_document(self):
-        self.import_file('test_import_document.silvaxml', globs=globals())
-        self.assertEventsAre(
-            ['ContentImported for /root/document'],
-            IContentImported)
-
+        importer = self.assertImportFile(
+            'test_import_document.silvaxml',
+            ['/root/document'])
+        self.assertEqual(importer.getProblems(), [])
         self.assertTrue('document' in self.root.objectIds())
 
         document = self.root.document
@@ -51,14 +49,13 @@ class DocumentImportTestCase(SilvaXMLTestCase):
     def test_import_reference(self):
         """Import a document that contains references to a link and an image.
         """
-        self.import_file('test_import_reference.silvaxml', globs=globals())
-        self.assertEventsAre(
-            ['ContentImported for /root/folder',
-             'ContentImported for /root/folder/index',
-             'ContentImported for /root/folder/example',
-             'ContentImported for /root/folder/folder/image',
-             'ContentImported for /root/folder/folder',],
-            IContentImported)
+        importer = self.assertImportFile(
+            'test_import_reference.silvaxml',
+            ['/root/folder',
+             '/root/folder/index',
+             '/root/folder/example',
+             '/root/folder/folder/image',
+             '/root/folder/folder'])
         self.assertEqual(
             self.root.folder.objectIds(),
             ['index', 'example', 'folder'])
@@ -69,6 +66,10 @@ class DocumentImportTestCase(SilvaXMLTestCase):
         document = self.root.folder.example
         image = self.root.folder.folder.image
         publication = self.root.folder
+        self.assertEqual(
+            importer.getProblems(),
+            [('Missing image file in the import: assets/1.', image)])
+
         self.assertTrue(verifyObject(IDocument, document))
         self.assertEqual(document.get_viewable(), None)
         self.assertNotEqual(document.get_editable(), None)
@@ -92,19 +93,14 @@ class DocumentImportTestCase(SilvaXMLTestCase):
     def test_import_reference_broken(self):
         """Import a document that contains only broken references.
         """
-        self.import_file(
-            'test_import_reference_broken.silvaxml', globs=globals())
-        self.assertEventsAre(
-            ['ContentImported for /root/folder',
-             'ContentImported for /root/folder/broken',
-             'ContentImported for /root/folder/folder',],
-            IContentImported)
+        importer = self.assertImportFile(
+            'test_import_reference_broken.silvaxml',
+            ['/root/folder',
+             '/root/folder/broken',
+             '/root/folder/folder',])
         self.assertEqual(
             self.root.folder.objectIds(),
             ['broken', 'folder'])
-        self.assertEqual(
-            self.root.folder.folder.objectIds(),
-            [])
 
         document = self.root.folder.broken
         self.assertTrue(verifyObject(IDocument, document))
@@ -127,17 +123,22 @@ class DocumentImportTestCase(SilvaXMLTestCase):
         self.assertEqual(image_reference.target, None)
         self.assertEqual(image_link_reference.target, None)
 
+        self.assertEqual(
+            importer.getProblems(),
+            [('Refering inexisting path somewhere in the import.', version),
+             ('Refering inexisting path publication in the import.', version),
+             ('Refering inexisting path folder/awesome_image in the import.', version)])
+
     def test_import_anchor(self):
         """Test importing a document that contains anchor, and check
         they are reported to the indexes.
         """
-        self.import_file(
-            'test_import_anchor.silvaxml', globs=globals())
-        self.assertEventsAre(
-            ['ContentImported for /root/folder',
-             'ContentImported for /root/folder/anchor',
-             'ContentImported for /root/folder/indexer'],
-            IContentImported)
+        importer = self.assertImportFile(
+            'test_import_anchor.silvaxml',
+            ['/root/folder',
+             '/root/folder/anchor',
+             '/root/folder/indexer'])
+        self.assertEqual(importer.getProblems(), [])
         self.assertEqual(
             self.root.folder.objectIds(),
             ['anchor', 'indexer'])
@@ -177,6 +178,7 @@ class DocumentImportTestCase(SilvaXMLTestCase):
         self.assertEqual(
             len(indexer.get_index_entry('That will pop your mind')),
             1)
+
 
 def test_suite():
     suite = unittest.TestSuite()

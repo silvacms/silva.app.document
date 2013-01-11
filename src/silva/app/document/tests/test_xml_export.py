@@ -4,11 +4,9 @@
 
 import unittest
 
-from Products.Silva.silvaxml.xmlexport import exportToString
 from Products.Silva.tests.test_xml_export import SilvaXMLTestCase
 from silva.app.document.testing import FunctionalLayer
 from silva.core.editor.testing import save_editor_text
-from silva.core.interfaces.errors import ExternalReferenceError
 
 HTML_REFERENCE = """
 <div>
@@ -64,9 +62,18 @@ class DocumentExportTestCase(SilvaXMLTestCase):
             link_content=self.root.folder.other,
             link_name=u'document link')
 
-        xml, info = exportToString(self.root.folder)
-        self.assertExportEqual(
-            xml, 'test_export_reference.silvaxml', globs=globals())
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_reference.silvaxml')
+        self.assertEqual(       # This is the mockup content
+            exporter.getZexpPaths(),
+            [(('', 'root', 'folder', 'other'), '1.zexp')])
+        self.assertEqual(
+            exporter.getAssetPaths(),
+            [(('', 'root', 'folder', 'image'), '1')])
+        self.assertEqual(
+            exporter.getProblems(),
+            [])
 
     def test_export_reference_external(self):
         """Test export of references that have targets not in the export tree.
@@ -86,8 +93,7 @@ class DocumentExportTestCase(SilvaXMLTestCase):
             link_content=self.root.other,
             link_name=u'document link')
 
-        self.assertRaises(
-            ExternalReferenceError, exportToString, self.root.folder)
+        self.assertExportFail(self.root.folder)
 
     def test_export_reference_broken(self):
         """Test export of broken and missing references.
@@ -101,9 +107,19 @@ class DocumentExportTestCase(SilvaXMLTestCase):
             link_content=None,
             link_name=u'document link')
 
-        xml, info = exportToString(self.root.folder)
-        self.assertExportEqual(
-            xml, 'test_export_reference_broken.silvaxml', globs=globals())
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_reference_broken.silvaxml')
+        self.assertEqual(
+            exporter.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
+            [])
+        self.assertEqual(
+            exporter.getProblems(),
+            [(u'Text contains a broken reference', version),
+             (u'Text contains a broken reference', version)])
 
     def test_export_multiple_root(self):
         """Test export of an HTML tag that have multiple root elements.
@@ -111,9 +127,12 @@ class DocumentExportTestCase(SilvaXMLTestCase):
         version = self.root.folder.example.get_editable()
         save_editor_text(version.body, HTML_MULTIPLE)
 
-        xml, info = exportToString(self.root.folder)
-        self.assertExportEqual(
-            xml, 'test_export_multiple.silvaxml', globs=globals())
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_multiple.silvaxml')
+        self.assertEqual(exporter.getZexpPaths(), [])
+        self.assertEqual(exporter.getAssetPaths(), [])
+        self.assertEqual(exporter.getProblems(), [])
 
 
 def test_suite():

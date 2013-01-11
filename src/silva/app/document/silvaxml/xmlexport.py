@@ -3,35 +3,31 @@
 # See also LICENSE.txt
 
 from five import grok
-from zope.interface import Interface
 from silva.app.document import interfaces
-from Products.Silva.silvaxml import xmlexport
-from silva.core.editor.transform.silvaxml.xmlexport import TextProducerProxy
 from silva.app.document.silvaxml import NS_DOCUMENT_URI
+from silva.core.editor.transform.silvaxml.xmlexport import TextProducerProxy
+from silva.core.xml import producers
+from zope.interface import Interface
 
 
-xmlexport.theXMLExporter.registerNamespace(
-    'silva-app-document', NS_DOCUMENT_URI)
-
-
-class DocumentProducer(xmlexport.VersionedContentProducer):
+class DocumentProducer(producers.SilvaVersionedContentProducer):
     grok.adapts(interfaces.IDocument, Interface)
 
     def sax(self):
         self.startElementNS(
             NS_DOCUMENT_URI, 'document', {'id': self.context.id})
-        self.workflow()
-        self.versions()
+        self.sax_workflow()
+        self.sax_versions()
         self.endElementNS(
             NS_DOCUMENT_URI, 'document')
 
 
-class DocumentVersionProducer(xmlexport.SilvaBaseProducer):
+class DocumentVersionProducer(producers.SilvaProducer):
     grok.adapts(interfaces.IDocumentVersion, Interface)
 
     def sax(self):
         self.startElement('content', {'version_id': self.context.id})
-        self.metadata()
+        self.sax_metadata()
         self.startElementNS(
             NS_DOCUMENT_URI, 'body')
         TextProducerProxy(self.context, self.context.body).sax(self)

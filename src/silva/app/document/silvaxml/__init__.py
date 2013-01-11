@@ -3,5 +3,7 @@
 # See also LICENSE.txt
 # package
 
-NS_DOCUMENT_URI = 'http://infrae.com/namespace/silva-app-document'
+from silva.core.xml import registerNamespace
 
+NS_DOCUMENT_URI = 'http://infrae.com/namespace/silva-app-document'
+registerNamespace('silva-app-document', NS_DOCUMENT_URI)
