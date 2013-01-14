@@ -138,9 +138,9 @@
     </content>
   </folder>
   <problem path="example/0">
-    Text contains a broken reference in the export.
+    Text contains a reference pointing outside of the export (../other).
   </problem>
   <problem path="example/0">
-    Text contains a broken reference in the export.
+    Text contains a reference pointing outside of the export (../image).
   </problem>
 </silva>

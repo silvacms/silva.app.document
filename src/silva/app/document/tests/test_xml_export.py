@@ -76,7 +76,8 @@ class DocumentExportTestCase(SilvaXMLTestCase):
             [])
 
     def test_export_reference_external(self):
-        """Test export of references that have targets not in the export tree.
+        """Test export of references that have targets not in the
+        export tree. This should fail.
         """
         factory = self.root.manage_addProduct['Silva']
         factory.manage_addMockupVersionedContent('other', 'Other')
@@ -94,6 +95,40 @@ class DocumentExportTestCase(SilvaXMLTestCase):
             link_name=u'document link')
 
         self.assertExportFail(self.root.folder)
+
+    def test_export_reference_external_force(self):
+        """Test export of references that have targets not in the
+        export tree, with the option external_references set to True.
+        """
+        factory = self.root.manage_addProduct['Silva']
+        factory.manage_addMockupVersionedContent('other', 'Other')
+
+        with self.layer.open_fixture('content-listing.png') as image:
+            factory.manage_addImage('image', 'Image', image)
+
+        version = self.root.folder.example.get_editable()
+        save_editor_text(
+            version.body, HTML_REFERENCE,
+            content=version,
+            image_content=self.root.image,
+            image_name=u'document image',
+            link_content=self.root.other,
+            link_name=u'document link')
+
+        exporter = self.assertExportEqual(
+            self.root.folder,
+            'test_export_reference_external.silvaxml',
+            options={'external_references': True})
+        self.assertEqual(
+            exporter.getZexpPaths(),
+            [])
+        self.assertEqual(
+            exporter.getAssetPaths(),
+            [])
+        self.assertEqual(
+            exporter.getProblems(),
+            [(u'Text contains a reference pointing outside of the export (../other).', version),
+             (u'Text contains a reference pointing outside of the export (../image).', version)])
 
     def test_export_reference_broken(self):
         """Test export of broken and missing references.
@@ -118,8 +153,8 @@ class DocumentExportTestCase(SilvaXMLTestCase):
             [])
         self.assertEqual(
             exporter.getProblems(),
-            [(u'Text contains a broken reference', version),
-             (u'Text contains a broken reference', version)])
+            [(u'Text contains a broken reference in the export.', version),
+             (u'Text contains a broken reference in the export.', version)])
 
     def test_export_multiple_root(self):
         """Test export of an HTML tag that have multiple root elements.
