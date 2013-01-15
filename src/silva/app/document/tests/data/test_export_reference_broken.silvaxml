@@ -137,10 +137,10 @@
       </silva-app-document:document>
     </content>
   </folder>
-  <problem path="example/0">
+  <problem path="folder/example/0">
     Text contains a broken reference in the export.
   </problem>
-  <problem path="example/0">
+  <problem path="folder/example/0">
     Text contains a broken reference in the export.
   </problem>
 </silva>
