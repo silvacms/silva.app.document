@@ -4,7 +4,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '3.0dev'
+version = '3.0'
 
 tests_require = [
     'Products.Silva [test]',
@@ -41,6 +41,7 @@ setup(name='silva.app.document',
         'silva.core.references',
         'silva.core.smi',
         'silva.core.views',
+        'silva.core.xml',
         'silva.core.services',
         'silva.translations',
         'silva.ui',

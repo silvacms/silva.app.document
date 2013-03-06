@@ -2,10 +2,10 @@
 Changes
 =======
 
-3.0 (unreleased)
+3.0 (2013/03/06)
 ----------------
 
-* ...
+* Update and import the Silva XML import and export API.
 
 3.0c1 (2012/09/25)
 ------------------
