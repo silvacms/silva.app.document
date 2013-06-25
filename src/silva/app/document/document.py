@@ -155,7 +155,7 @@ class DocumentDetails(BrowserView):
     introduction for it.
     """
     grok.implements(IDocumentDetails)
-    DEFAULT_FORMAT = u"""<img src="{url}?thumbnail" width="{width}" height="{height}" class="thumbnail" />"""
+    DEFAULT_FORMAT = u"""<img src="{url}" width="{width}" height="{height}" class="thumbnail" />"""
 
     def get_title(self):
         return self.context.get_title().strip()

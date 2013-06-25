@@ -237,6 +237,12 @@ class DocumentTestCase(TestCase):
         self.assertEqual(
             details.get_thumbnail(),
             None)
+        self.assertEqual(
+            details.get_thumbnail_url(),
+            None)
+        self.assertEqual(
+            details.get_image_url(),
+            None)
 
         # Query the adapter with a view (API)
         details = queryMultiAdapter((version, TestRequest()), name='details')
@@ -304,6 +310,12 @@ class DocumentTestCase(TestCase):
 <img src="http://localhost/root/listing?thumbnail"
      width="120" height="75" class="thumbnail" />
 """)
+        self.assertXMLEqual(
+            details.get_thumbnail_url(),
+            "http://localhost/root/listing?thumbnail")
+        self.assertXMLEqual(
+            details.get_image_url(),
+            "http://localhost/root/listing")
 
         # Query the adapter with a view (API)
         details = queryMultiAdapter((version, TestRequest()), name='details')
