@@ -14,7 +14,6 @@ from zope.component import getMultiAdapter, getUtility
 from zope.interface import Interface
 from zope.publisher.browser import BrowserView
 from zope.publisher.browser import TestRequest
-from zope.traversing.browser import absoluteURL
 
 from silva.core import conf as silvaconf
 from silva.core.smi.content import IEditScreen
@@ -26,6 +25,7 @@ from silva.core.editor.transform.interfaces import IInputEditorFilter
 from silva.core.interfaces import IIndexEntries, IImage
 from silva.core.references.interfaces import IReferenceService
 from silva.core.views import views as silvaviews
+from silva.core.views.interfaces import IPreviewLayer
 from silva.ui.interfaces import IJSView
 from silva.ui.rest.base import Screen, PageREST
 from silva.ui.rest.container import ListingPreview
@@ -160,7 +160,7 @@ class DocumentDetails(BrowserView):
     def get_title(self):
         return self.context.get_title().strip()
 
-    def get_thumbnail(self, format=DEFAULT_FORMAT):
+    def _get_image(self):
         text = unicode(self.context.body)
         if text:
             tree = lxml.html.fromstring(text)
@@ -172,13 +172,34 @@ class DocumentDetails(BrowserView):
                     self.context, name=image.attrib['reference'])
                 content = reference.target
                 if IImage.providedBy(content):
-                    size = content.get_dimensions(thumbnail=True)
-                else:
-                    size = (0, 0)
-                return format.format(
-                    url=absoluteURL(content, self.request),
-                    height=size[1],
-                    width=size[0])
+                    return content
+        return None
+
+    def get_image_url(self):
+        image = self._get_image()
+        if image is not None:
+            return image.url(
+                request=self.request,
+                preview=IPreviewLayer.providedBy(self.request))
+        return None
+
+    def get_thumbnail_url(self):
+        image = self._get_image()
+        if image is not None:
+            return image.url(
+                request=self.request,
+                thumbnail=True,
+                preview=IPreviewLayer.providedBy(self.request))
+        return None
+
+    def get_thumbnail(self, format=DEFAULT_FORMAT):
+        image = self._get_image()
+        if image is not None:
+            size = image.get_dimensions(thumbnail=True)
+            return format.format(
+                url=image.url(request=self.request, thumbnail=True),
+                height=size[1],
+                width=size[0])
         return None
 
     def get_introduction(self, length=128):

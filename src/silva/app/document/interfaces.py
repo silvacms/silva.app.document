@@ -51,6 +51,14 @@ class IDocumentDetails(IBrowserView):
         document image.
         """
 
+    def get_thumbnail_url():
+        """Return the URL of the thumbnail of the first document image.
+        """
+
+    def get_image_url():
+        """Return the URL of the first document image.
+        """
+
     def get_introduction(length=128):
         """Return a piece of HTML with part of the first paragraph.
         """
