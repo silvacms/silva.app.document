@@ -59,8 +59,10 @@ class IDocumentDetails(IBrowserView):
         """Return the URL of the first document image.
         """
 
-    def get_introduction(length=128):
-        """Return a piece of HTML with part of the first paragraph.
+    def get_introduction(length=128, words=None):
+        """Return a piece of HTML with part of the first
+        paragraph. You can either control the number of characters or
+        words contained inside the introduction.
         """
 
     def get_text():
