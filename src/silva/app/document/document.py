@@ -107,7 +107,7 @@ class DocumentEdit(PageREST):
             version = self.context.get_editable()
             if version is not None:
                 text = version.body.render(
-                    version, self.request, IInputEditorFilter)
+                    version, self.request, type=IInputEditorFilter)
 
                 return {"ifaces": ["editor"],
                         "name": "body",
@@ -129,7 +129,7 @@ class DocumentPublicView(silvaviews.View):
         self.text = None
         if self.content is not None:
             self.text = self.content.body.render(
-                self.content, self.request, IDisplayFilter)
+                self.content, self.request, type=IDisplayFilter)
 
 
 class IManageDocumentVersion(Interface):
