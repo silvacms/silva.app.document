@@ -52,11 +52,12 @@ class IDocumentDetails(IBrowserView):
         """
 
     def get_thumbnail_url():
-        """Return the URL of the thumbnail of the first document image.
+        """Return the URL of the thumbnail of the first image in the
+        document.
         """
 
     def get_image_url():
-        """Return the URL of the first document image.
+        """Return the URL of the first image in the document.
         """
 
     def get_introduction(length=128, words=None):
@@ -65,6 +66,6 @@ class IDocumentDetails(IBrowserView):
         words contained inside the introduction.
         """
 
-    def get_text():
-        """Return the text (only) of the document.
+    def get_text(downgrade_titles=False):
+        """Return the full HTML (without the title) of the document.
         """

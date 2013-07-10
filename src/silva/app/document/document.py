@@ -206,8 +206,10 @@ class DocumentDetails(BrowserView):
         return self.context.body.introduction(
             self.context, self.request, max_length=length, max_words=words)
 
-    def get_text(self):
-        return self.context.body.render(self.context, self.request)
+    def get_text(self, downgrade_titles=False):
+        return self.context.body.render(
+            self.context, self.request,
+            downgrade_titles=downgrade_titles)
 
 
 class DocumentListingPreview(ListingPreview):
