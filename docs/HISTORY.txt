@@ -2,10 +2,20 @@
 Changes
 =======
 
-3.0.1 (unreleased)
+3.0.1 (2013/08/26)
 ------------------
 
-* ...
+* Extends ``IDocumentDetails`` API:
+
+  - Add methods to access the URL of the first image contained in the
+    document, or its thumbnail.
+
+  - Add an option to retrieve the text of the document with downgraded
+    titles (meaning ``h1`` becomes ``h2``, ``h2`` becomes ``h3`` and so on).
+
+  - Add an option to limit the size of the introduction to a given
+    words (in addition to the possiblity to a given number of characters).
+
 
 3.0 (2013/03/06)
 ----------------
