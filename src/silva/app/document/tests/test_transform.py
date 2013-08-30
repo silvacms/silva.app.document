@@ -5,7 +5,7 @@
 
 import unittest
 
-from Products.Silva.testing import TestRequest, TestCase
+from Products.Silva.testing import TestRequest, TestCase, Transaction
 
 from zope.component import getMultiAdapter
 
@@ -21,9 +21,10 @@ class TitleTransformerTestCase(TestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
-        self.layer.login('author')
-        factory = self.root.manage_addProduct['silva.app.document']
-        factory.manage_addDocument('document', 'Document title')
+        with Transaction():
+            self.layer.login('author')
+            factory = self.root.manage_addProduct['silva.app.document']
+            factory.manage_addDocument('document', 'Document title')
 
     def test_render_editor(self):
         """Transform a document text for the editor. The title will be

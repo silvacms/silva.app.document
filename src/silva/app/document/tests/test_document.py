@@ -20,7 +20,7 @@ from silva.core.references.reference import get_content_id
 from silva.core.services.interfaces import ICatalogService
 from silva.core.services.interfaces import IMetadataService
 
-from Products.Silva.testing import CatalogTransaction, TestRequest, TestCase
+from Products.Silva.testing import Transaction, TestRequest, TestCase
 
 HTML_CATALOG = """
 <div>
@@ -56,8 +56,9 @@ class DocumentTestCase(TestCase):
     def test_document(self):
         """Test document factory.
         """
-        factory = self.root.manage_addProduct['silva.app.document']
-        factory.manage_addDocument('document', 'Test Document')
+        with Transaction():
+            factory = self.root.manage_addProduct['silva.app.document']
+            factory.manage_addDocument('document', 'Test Document')
 
         self.assertTrue('document' in self.root.objectIds())
         document = self.root.document
@@ -75,14 +76,16 @@ class DocumentTestCase(TestCase):
     def test_fulltext(self):
         """Test document fulltext.
         """
-        factory = self.root.manage_addProduct['silva.app.document']
-        factory.manage_addDocument('document', 'Test Document')
-        return
+        with Transaction():
+            factory = self.root.manage_addProduct['silva.app.document']
+            factory.manage_addDocument('document', 'Test Document')
+
         version = self.root.document.get_editable()
         self.assertItemsEqual(
             version.fulltext(),
-            ['Test document'])
+            ['Test Document'])
         version.body.save(version, TestRequest(), """
+<h1>Test Document</h1>
 <p>
   This is some text, with <a href="#">link to the internet</a>.
 </p>
@@ -90,13 +93,14 @@ class DocumentTestCase(TestCase):
         self.assertItemsEqual(
             version.fulltext(),
             ['This is some text, with', 'link to the internet',
-             '.', 'Test document'])
+             '.', 'Test Document'])
 
     def test_catalog(self):
         """Test that the content of the document is in the catalog.
         """
-        factory = self.root.manage_addProduct['silva.app.document']
-        factory.manage_addDocument('document', 'Test Document')
+        with Transaction():
+            factory = self.root.manage_addProduct['silva.app.document']
+            factory.manage_addDocument('document', 'Test Document')
 
         version = self.root.document.get_editable()
         save_editor_text(version.body, HTML_CATALOG, content=version)
@@ -114,7 +118,7 @@ class DocumentTestCase(TestCase):
     def test_catalog_transaction(self):
         """Test that the content of the document is in the catalog.
         """
-        with CatalogTransaction():
+        with Transaction(catalog=True):
             factory = self.root.manage_addProduct['silva.app.document']
             factory.manage_addDocument('document', 'Test Document')
 
@@ -134,17 +138,18 @@ class DocumentTestCase(TestCase):
     def test_indexes(self):
         """Test Indexer indexes.
         """
-        factory = self.root.manage_addProduct['silva.app.document']
-        factory.manage_addDocument('document', 'Test Document')
-        version = self.root.document.get_editable()
-        version.body.save(version, TestRequest(), """
-<p>
-  <h1>Test Document</h1>
-  <a class="anchor" name="first" title="First anchor">First anchor</a>
-  Some text.
-  <a class="anchor" name="second" title="Second anchor">First anchor</a>
-</p>
-""")
+        with Transaction():
+            factory = self.root.manage_addProduct['silva.app.document']
+            factory.manage_addDocument('document', 'Test Document')
+            version = self.root.document.get_editable()
+            version.body.save(version, TestRequest(), """
+    <p>
+      <h1>Test Document</h1>
+      <a class="anchor" name="first" title="First anchor">First anchor</a>
+      Some text.
+      <a class="anchor" name="second" title="Second anchor">First anchor</a>
+    </p>
+    """)
 
         # There are no entries by default, and not published.
         indexes = queryAdapter(self.root.document, IIndexEntries)
@@ -163,21 +168,22 @@ class DocumentTestCase(TestCase):
     def test_feeds(self):
         """When you have published document, you can have feeds out of them.
         """
-        factory = self.root.manage_addProduct['silva.app.document']
-        factory.manage_addDocument('document', 'Test Document')
-        factory.manage_addDocument('work', 'Work in progress')
-        version = self.root.document.get_editable()
-        version.body.save(version, TestRequest(), """
-<h1>Test Document</h1>
-<h3>Sub title</h3>
-<p>This is the first story.</p>
-<p>And that is the second story of the day.</p>
-""")
-        binding = getUtility(IMetadataService).getMetadata(version)
-        binding.setValues('silva-extra', {
-                'content_description': 'Test content',
-                'keywords': 'test'})
-        IPublicationWorkflow(self.root.document).publish()
+        with Transaction():
+            factory = self.root.manage_addProduct['silva.app.document']
+            factory.manage_addDocument('document', 'Test Document')
+            factory.manage_addDocument('work', 'Work in progress')
+            version = self.root.document.get_editable()
+            version.body.save(version, TestRequest(), """
+    <h1>Test Document</h1>
+    <h3>Sub title</h3>
+    <p>This is the first story.</p>
+    <p>And that is the second story of the day.</p>
+    """)
+            binding = getUtility(IMetadataService).getMetadata(version)
+            binding.setValues('silva-extra', {
+                    'content_description': 'Test content',
+                    'keywords': 'test'})
+            IPublicationWorkflow(self.root.document).publish()
 
         feed = queryMultiAdapter(
             (self.root, TestRequest()),
@@ -208,15 +214,16 @@ class DocumentTestCase(TestCase):
     def test_details_document_without_image(self):
         """Test details, retrieve the introduction, and no thumbnail.
         """
-        factory = self.root.manage_addProduct['silva.app.document']
-        factory.manage_addDocument('document', 'Test Document')
-        version = self.root.document.get_editable()
-        version.body.save(version, TestRequest(), """
-<h1>Test Document</h1>
-<h3>Sub title</h3>
-<p>This is the first story.</p>
-<p>And that is the second story of the day.</p>
-""")
+        with Transaction():
+            factory = self.root.manage_addProduct['silva.app.document']
+            factory.manage_addDocument('document', 'Test Document')
+            version = self.root.document.get_editable()
+            version.body.save(version, TestRequest(), """
+    <h1>Test Document</h1>
+    <h3>Sub title</h3>
+    <p>This is the first story.</p>
+    <p>And that is the second story of the day.</p>
+    """)
 
         # Query the adapter with an interface (API)
         details = queryMultiAdapter((version, TestRequest()), IDocumentDetails)
@@ -267,23 +274,24 @@ class DocumentTestCase(TestCase):
     def test_details_document_with_image(self):
         """Test document details with a thumbnail and no introduction.
         """
-        factory = self.root.manage_addProduct['silva.app.document']
-        factory.manage_addDocument('document', 'Test Document')
-        factory = self.root.manage_addProduct['Silva']
-        with self.layer.open_fixture('content-listing.png') as image:
-            factory.manage_addImage('listing', 'Content Listing', image)
+        with Transaction():
+            factory = self.root.manage_addProduct['silva.app.document']
+            factory.manage_addDocument('document', 'Test Document')
+            factory = self.root.manage_addProduct['Silva']
+            with self.layer.open_fixture('content-listing.png') as image:
+                factory.manage_addImage('listing', 'Content Listing', image)
 
-        version = self.root.document.get_editable()
-        version.body.save(version, TestRequest(), """
-<h3>Sub title</h3>
-<ul>
-   <li>This is a list.</li>
-   <li>This is an item actually.</li>
-</ul>
-<div class="image">
-  <img alt="logo" data-silva-reference="new" data-silva-target="%s" />
-</div>
-""" % get_content_id(self.root.listing))
+            version = self.root.document.get_editable()
+            version.body.save(version, TestRequest(), """
+    <h3>Sub title</h3>
+    <ul>
+       <li>This is a list.</li>
+       <li>This is an item actually.</li>
+    </ul>
+    <div class="image">
+      <img alt="logo" data-silva-reference="new" data-silva-target="%s" />
+    </div>
+    """ % get_content_id(self.root.listing))
 
         # Query the adapter with an interface (API)
         details = queryMultiAdapter((version, TestRequest()), IDocumentDetails)
@@ -346,10 +354,12 @@ class DocumentTestCase(TestCase):
     def test_details_empty_document(self):
         """Test details on a document that doesn't have any text at all.
         """
-        factory = self.root.manage_addProduct['silva.app.document']
-        factory.manage_addDocument('document', 'Test Document')
-        version = self.root.document.get_editable()
-        version.body.save(version, TestRequest(), "")
+        with Transaction():
+            factory = self.root.manage_addProduct['silva.app.document']
+            factory.manage_addDocument('document', 'Test Document')
+            version = self.root.document.get_editable()
+            version.body.save(version, TestRequest(), "")
+
         # Query the adapter with an interface (API)
         details = queryMultiAdapter((version, TestRequest()), IDocumentDetails)
         self.assertTrue(verifyObject(IDocumentDetails, details))

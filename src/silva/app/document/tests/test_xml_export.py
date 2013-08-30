@@ -4,6 +4,7 @@
 
 import unittest
 
+from Products.Silva.testing import Transaction
 from Products.Silva.tests.test_xml_export import SilvaXMLTestCase
 from silva.app.document.testing import FunctionalLayer
 from silva.core.editor.testing import save_editor_text
@@ -39,28 +40,31 @@ class DocumentExportTestCase(SilvaXMLTestCase):
 
     def setUp(self):
         self.root = self.layer.get_application()
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addFolder('folder', 'Folder')
-        factory = self.root.folder.manage_addProduct['silva.app.document']
-        factory.manage_addDocument('example', 'Example')
+        self.layer.login('author')
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addFolder('folder', 'Folder')
+            factory = self.root.folder.manage_addProduct['silva.app.document']
+            factory.manage_addDocument('example', 'Example')
 
     def test_export_reference(self):
         """Test export of mutiple references in one document.
         """
-        factory = self.root.folder.manage_addProduct['Silva']
-        factory.manage_addMockupVersionedContent('other', 'Other')
+        with Transaction():
+            factory = self.root.folder.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('other', 'Other')
 
-        with self.layer.open_fixture('content-listing.png') as image:
-            factory.manage_addImage('image', 'Image', image)
+            with self.layer.open_fixture('content-listing.png') as image:
+                factory.manage_addImage('image', 'Image', image)
 
-        version = self.root.folder.example.get_editable()
-        save_editor_text(
-            version.body, HTML_REFERENCE,
-            content=version,
-            image_content=self.root.folder.image,
-            image_name=u'document image',
-            link_content=self.root.folder.other,
-            link_name=u'document link')
+            version = self.root.folder.example.get_editable()
+            save_editor_text(
+                version.body, HTML_REFERENCE,
+                content=version,
+                image_content=self.root.folder.image,
+                image_name=u'document image',
+                link_content=self.root.folder.other,
+                link_name=u'document link')
 
         exporter = self.assertExportEqual(
             self.root.folder,
@@ -79,20 +83,21 @@ class DocumentExportTestCase(SilvaXMLTestCase):
         """Test export of references that have targets not in the
         export tree. This should fail.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addMockupVersionedContent('other', 'Other')
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('other', 'Other')
 
-        with self.layer.open_fixture('content-listing.png') as image:
-            factory.manage_addImage('image', 'Image', image)
+            with self.layer.open_fixture('content-listing.png') as image:
+                factory.manage_addImage('image', 'Image', image)
 
-        version = self.root.folder.example.get_editable()
-        save_editor_text(
-            version.body, HTML_REFERENCE,
-            content=version,
-            image_content=self.root.image,
-            image_name=u'document image',
-            link_content=self.root.other,
-            link_name=u'document link')
+            version = self.root.folder.example.get_editable()
+            save_editor_text(
+                version.body, HTML_REFERENCE,
+                content=version,
+                image_content=self.root.image,
+                image_name=u'document image',
+                link_content=self.root.other,
+                link_name=u'document link')
 
         self.assertExportFail(self.root.folder)
 
@@ -100,20 +105,21 @@ class DocumentExportTestCase(SilvaXMLTestCase):
         """Test export of references that have targets not in the
         export tree, with the option external_references set to True.
         """
-        factory = self.root.manage_addProduct['Silva']
-        factory.manage_addMockupVersionedContent('other', 'Other')
+        with Transaction():
+            factory = self.root.manage_addProduct['Silva']
+            factory.manage_addMockupVersionedContent('other', 'Other')
 
-        with self.layer.open_fixture('content-listing.png') as image:
-            factory.manage_addImage('image', 'Image', image)
+            with self.layer.open_fixture('content-listing.png') as image:
+                factory.manage_addImage('image', 'Image', image)
 
-        version = self.root.folder.example.get_editable()
-        save_editor_text(
-            version.body, HTML_REFERENCE,
-            content=version,
-            image_content=self.root.image,
-            image_name=u'document image',
-            link_content=self.root.other,
-            link_name=u'document link')
+            version = self.root.folder.example.get_editable()
+            save_editor_text(
+                version.body, HTML_REFERENCE,
+                content=version,
+                image_content=self.root.image,
+                image_name=u'document image',
+                link_content=self.root.other,
+                link_name=u'document link')
 
         exporter = self.assertExportEqual(
             self.root.folder,
@@ -133,14 +139,15 @@ class DocumentExportTestCase(SilvaXMLTestCase):
     def test_export_reference_broken(self):
         """Test export of broken and missing references.
         """
-        version = self.root.folder.example.get_editable()
-        save_editor_text(
-            version.body, HTML_REFERENCE,
-            content=version,
-            image_content=None,
-            image_name=u'document image',
-            link_content=None,
-            link_name=u'document link')
+        with Transaction():
+            version = self.root.folder.example.get_editable()
+            save_editor_text(
+                version.body, HTML_REFERENCE,
+                content=version,
+                image_content=None,
+                image_name=u'document image',
+                link_content=None,
+                link_name=u'document link')
 
         exporter = self.assertExportEqual(
             self.root.folder,
@@ -159,8 +166,9 @@ class DocumentExportTestCase(SilvaXMLTestCase):
     def test_export_multiple_root(self):
         """Test export of an HTML tag that have multiple root elements.
         """
-        version = self.root.folder.example.get_editable()
-        save_editor_text(version.body, HTML_MULTIPLE)
+        with Transaction():
+            version = self.root.folder.example.get_editable()
+            save_editor_text(version.body, HTML_MULTIPLE)
 
         exporter = self.assertExportEqual(
             self.root.folder,
