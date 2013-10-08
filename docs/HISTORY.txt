@@ -2,10 +2,11 @@
 Changes
 =======
 
-3.0.2 (unreleased)
+3.0.2 (2013/10/08)
 ------------------
 
-* ...
+* Update tests to be ran inside a transaction to ensure the last
+  author is properly set.
 
 3.0.1 (2013/08/26)
 ------------------

@@ -4,7 +4,6 @@
 
 import unittest
 
-
 from zope.interface.verify import verifyObject
 from zope.component import getUtility, queryAdapter
 from zope.component import queryMultiAdapter
