@@ -11,8 +11,8 @@ This document type can be extend by other Silva extensions.
 Code repository
 ===============
 
-You can find the code of this extension in Mercurial:
-https://hg.infrae.com/silva.app.document/.
+You can find the code of this extension in Git:
+https://github.com/silvacms/silva.app.document
 
 
 .. _CKEditor: http://ckeditor.com/

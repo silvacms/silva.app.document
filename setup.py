@@ -12,7 +12,7 @@ tests_require = [
 
 setup(name='silva.app.document',
       version=version,
-      description="Document content for Silva 3.x with WYSIWYG Editor.",
+      description="Document content for Silva 3 with WYSIWYG Editor",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       # Get more strings from http://pypi.python.org/pypi?%3Aaction=list_classifiers
@@ -22,7 +22,7 @@ setup(name='silva.app.document',
       keywords='document silva wysiwyg',
       author='Antonin Amand',
       author_email='info@infrae.com',
-      url='',
+      url='https://github.com/silvacms/silva.app.document',
       license='BSD',
       package_dir={'': 'src'},
       packages=find_packages('src'),
